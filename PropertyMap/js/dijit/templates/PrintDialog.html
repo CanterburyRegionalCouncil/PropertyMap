@@ -1,0 +1,165 @@
+<div class="${theme}" role="presentation">
+    <div data-dojo-attach-point="_buttonNode" title="${_i18n.widgets.PrintDialog.title}" role="button" class="${css.container} ${css.button}">
+        <div class="${css.icon}"></div>
+    </div>
+    <div data-dojo-attach-point="_dialogNode">
+        <div class="${css.printDialogContent}">
+            <div class="${css.printDialogSubHeader}">${_i18n.widgets.PrintDialog.heading}</div>
+
+            <div class="${css.printDialogFormContainer}">
+                <div data-dojo-type="dijit/form/Form" data-dojo-attach-point="printSettingsFormDijit">
+                    <table cellspacing="5" style="width:100%;">
+                        <tr>
+                            <td style="width:65px;">
+                                ${_i18n.widgets.PrintDialog.maptitle}:
+                            </td>
+                            <td>
+                                <input type="text" data-dojo-type="dijit/form/ValidationTextBox" data-dojo-props="name:'title',trim:true,required:true,style:'width:100%;',value:'${defaultMapTitle}'" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                ${_i18n.widgets.PrintDialog.layout}:
+                            </td>
+                            <td id="layoutPH">
+                                <select id="layout" name="layout" data-dojo-attach-point="_layoutComboNode" class="dijitTextBox print-dialog-selectinput" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                ${_i18n.widgets.PrintDialog.format}:
+                            </td>
+                            <td id="formatPH">
+                                <select id="format" name="format" data-dojo-attach-point="_formatComboNode" class="dijitTextBox print-dialog-selectinput" />
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <div class="buttonActionBar">
+                <div data-dojo-type="dijit/form/DropDownButton" data-dojo-props="iconClass:'settingsIcon',showLabel:true">
+                    <span>
+                        ${_i18n.widgets.PrintDialog.settings}
+                    </span>
+                    <div data-dojo-type="dijit/TooltipDialog" class="gis_PrintDijit">
+                        <div style="width:250px;">
+                            <div style="font-weight:bold;">
+                                ${_i18n.widgets.PrintDialog.mapScaleExtent}:
+                            </div>
+                            <div data-dojo-type="dijit/form/Form" data-dojo-attach-point="preserveFormDijit">
+                                <table cellspacing="5">
+                                    <tr>
+                                        <td style="vertical-align:middle;">
+                                            ${_i18n.widgets.PrintDialog.preserve}:
+                                        </td>
+                                        <td>
+                                            <input type="radio" data-dojo-type="dijit/form/RadioButton" name="preserveScale" checked value="true" />
+                                            ${_i18n.widgets.PrintDialog.mapScale}&nbsp;&nbsp;
+                                            <input type="radio" data-dojo-type="dijit/form/RadioButton" name="preserveScale" value="false" />
+                                            ${_i18n.widgets.PrintDialog.mapExtent}
+                                        </td>
+                                    <tr>
+                                        <td>
+                                            ${_i18n.widgets.PrintDialog.forceScale}:
+                                        </td>
+                                        <td>
+                                            <input type="radio" data-dojo-type="dijit/form/RadioButton" data-dojo-props="name:'preserveScale',value:'force',checked:false" /> <input type="text" data-dojo-type="dijit/form/NumberTextBox" data-dojo-props="name:'forcedScale',required:false,style:'width:100px;'" data-dojo-attach-point="forceScaleNTB" /> <a href="#" data-dojo-attach-event="click:getCurrentMapScale">${_i18n.widgets.PrintDialog.getCurrentScale}</a>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div style="font-weight:bold;">
+                                ${_i18n.widgets.PrintDialog.mapMetadata}:
+                            </div>
+                            <div data-dojo-type="dijit/form/Form" data-dojo-attach-point="layoutMetadataDijit">
+                                <table cellspacing="5" style="width:100%;">
+                                    <tr>
+                                        <td>
+                                            ${_i18n.widgets.PrintDialog.author}:
+                                        </td>
+                                        <td>
+                                            <input type="text" data-dojo-type="dijit/form/ValidationTextBox" data-dojo-props="name:'author',trim:true,required:false,style:'width:100%;',value:'${defaultAuthor}'" data-dojo-attach-point="authorTB" />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            ${_i18n.widgets.PrintDialog.copyright}:
+                                        </td>
+                                        <td>
+                                            <input type="text" data-dojo-type="dijit/form/ValidationTextBox" data-dojo-props="name:'copyright',trim:true,required:false,style:'width:100%;',value:'${defaultCopyright}'" />
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div data-dojo-type="dijit/form/Form" data-dojo-attach-point="layoutFormDijit">
+                                <table cellspacing="5">
+                                    <tr>
+                                        <td>
+                                            ${_i18n.widgets.PrintDialog.lncludeLegend}:
+                                        </td>
+                                        <td>
+                                            <input type="checkbox" data-dojo-type="dijit/form/CheckBox" data-dojo-props="name:'legend',value:true,checked:true" />
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div style="font-weight:bold;">
+                                ${_i18n.widgets.PrintDialog.mapOnlyOptions}:
+                            </div>
+                            <div data-dojo-type="dijit/form/Form" data-dojo-attach-point="mapOnlyFormDijit">
+                                <table cellspacing="5">
+                                    <tr>
+                                        <td>
+                                            ${_i18n.widgets.PrintDialog.width}:
+                                        </td>
+                                        <td>
+                                            <input type="text" data-dojo-type="dijit/form/NumberTextBox" data-dojo-props="name:'width',required:true,value:3300,style:'width:100px;'" />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            ${_i18n.widgets.PrintDialog.height}:
+                                        </td>
+                                        <td>
+                                            <input type="text" data-dojo-type="dijit/form/NumberTextBox" data-dojo-props="name:'height',required:true,value:2550,style:'width:100px;'" />
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div style="font-weight:bold;">
+                                ${_i18n.widgets.PrintDialog.printQualityOptions}:
+                            </div>
+                            <div data-dojo-type="dijit/form/Form" data-dojo-attach-point="mapQualityFormDijit">
+                                <table cellspacing="5">
+                                    <tr>
+                                        <td>
+                                            ${_i18n.widgets.PrintDialog.dpi}:
+                                        </td>
+                                        <td>
+                                            <input type="text" data-dojo-type="dijit/form/NumberTextBox" data-dojo-props="name:'dpi',required:true,value:300,style:'width:100px;'" />
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div data-dojo-type="dijit/form/Button" data-dojo-props="busyLabel:'printing',iconClass:'printIcon'"
+                     data-dojo-attach-event="onClick:print" data-dojo-attach-point="printButtonDijit">
+                    ${_i18n.widgets.PrintDialog.print}
+                </div>
+            </div>
+
+            <div data-dojo-attach-point="printResultsNode" class="resultsContainer">
+            </div>
+            <div data-dojo-attach-point="clearActionBarNode" class="buttonActionBar"
+                 style="display:none;padding:0;">
+                <div data-dojo-type="dijit/form/Button" data-dojo-props="iconClass:'clearIcon'"
+                     data-dojo-attach-event="onClick:clearResults">
+                    ${_i18n.widgets.PrintDialog.clearList}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

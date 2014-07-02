@@ -1,0 +1,235 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{7ABB1327-B54A-4A41-9846-999FA1BCE8A2}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>PropertyMap</RootNamespace>
+    <AssemblyName>PropertyMap</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <UseIISExpress>true</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.6.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include=".jshintrc" />
+    <Content Include="css\PrintDialog.css" />
+    <Content Include="css\BasemapDialog.css" />
+    <Content Include="favicon.ico" />
+    <Content Include="font\fontello.eot">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="font\fontello.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="font\fontello.woff">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="images\clear.png" />
+    <Content Include="images\image.png" />
+    <Content Include="images\pdf.png" />
+    <Content Include="images\print.png" />
+    <Content Include="images\settings.png" />
+    <Content Include="js\dijit\templates\BasemapDialog.html" />
+    <Content Include="js\dijit\templates\PrintDialog.html" />
+    <Content Include="js\dijit\templates\PrintResult.html" />
+    <Content Include="js\dijit\templates\SuggestionSearch.html" />
+    <Content Include="js\nls\BasemapDialog.js" />
+    <Content Include="js\nls\PrintDialog.js" />
+    <Content Include="js\BasemapDialog.js" />
+    <Content Include="js\PrintDialog.js" />
+    <Content Include="js\SuggestionSearch.js" />
+    <Content Include="README.md" />
+    <Content Include="resources\fontello-045f1512.zip" />
+    <Content Include="packages.config" />
+    <None Include="Properties\PublishProfiles\test1.ecan.govt.nz %28TEST%29.pubxml" />
+    <Content Include="proxy.ashx" />
+    <Content Include="proxy.config" />
+    <None Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="config\defaults.js" />
+    <Content Include="css\dialogs.css" />
+    <Content Include="css\dijit.css" />
+    <Content Include="css\FlickrLayer.css" />
+    <Content Include="css\fontello-ie7.css" />
+    <Content Include="css\fontello.css" />
+    <Content Include="css\geocoder.css" />
+    <Content Include="css\HomeButton.css" />
+    <Content Include="css\InstagramLayer.css" />
+    <Content Include="css\LocateButton.css" />
+    <Content Include="css\main.css" />
+    <Content Include="css\popup.css" />
+    <Content Include="css\ShareDialog.css" />
+    <Content Include="css\SimpleSlider.css" />
+    <Content Include="css\TableOfContents.css" />
+    <Content Include="css\TwitterLayer.css" />
+    <Content Include="css\WebcamsLayer.css" />
+    <Content Include="Default.aspx" />
+    <Content Include="font\fontello.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Global.asax" />
+    <Content Include="images\ajax-loader.gif" />
+    <Content Include="images\apple-touch-icon.png" />
+    <Content Include="images\item.png" />
+    <Content Include="images\map\flickr25x30.png" />
+    <Content Include="images\map\instagram25x30.png" />
+    <Content Include="images\map\twitter25x30.png" />
+    <Content Include="images\map\webcam32x32.png" />
+    <Content Include="images\popup-sprite.png" />
+    <Content Include="images\selected-arrow.png" />
+    <Content Include="index.html" />
+    <Content Include="js\About.js" />
+    <Content Include="js\dijit\templates\DrawerMenu.html" />
+    <Content Include="js\dijit\templates\ShareDialog.html" />
+    <Content Include="js\dijit\templates\TableOfContents.html" />
+    <Content Include="js\Drawer.js" />
+    <Content Include="js\DrawerMenu.js" />
+    <Content Include="js\FlickrLayer.js" />
+    <Content Include="js\InstagramLayer.js" />
+    <Content Include="js\main.js" />
+    <Content Include="js\nls\ar\resources.js" />
+    <Content Include="js\nls\cs\resources.js" />
+    <Content Include="js\nls\da\resources.js" />
+    <Content Include="js\nls\de\resources.js" />
+    <Content Include="js\nls\es\resources.js" />
+    <Content Include="js\nls\et\resources.js" />
+    <Content Include="js\nls\fi\resources.js" />
+    <Content Include="js\nls\fr\resources.js" />
+    <Content Include="js\nls\he\resources.js" />
+    <Content Include="js\nls\it\resources.js" />
+    <Content Include="js\nls\ja\resources.js" />
+    <Content Include="js\nls\ko\resources.js" />
+    <Content Include="js\nls\lt\resources.js" />
+    <Content Include="js\nls\lv\resources.js" />
+    <Content Include="js\nls\nb\resources.js" />
+    <Content Include="js\nls\nl\resources.js" />
+    <Content Include="js\nls\pl\resources.js" />
+    <Content Include="js\nls\pt-br\resources.js" />
+    <Content Include="js\nls\pt-pt\resources.js" />
+    <Content Include="js\nls\resources.js" />
+    <Content Include="js\nls\ro\resources.js" />
+    <Content Include="js\nls\ru\resources.js" />
+    <Content Include="js\nls\ShareDialog.js" />
+    <Content Include="js\nls\sv\resources.js" />
+    <Content Include="js\nls\th\resources.js" />
+    <Content Include="js\nls\tr\resources.js" />
+    <Content Include="js\nls\zh-cn\resources.js" />
+    <Content Include="js\OAuthHelper.js" />
+    <Content Include="js\respond.min.js" />
+    <Content Include="js\ShareDialog.js" />
+    <Content Include="js\SocialLayers.js" />
+    <Content Include="js\TableOfContents.js" />
+    <Content Include="js\template.js" />
+    <Content Include="js\TwitterLayer.js" />
+    <Content Include="js\WebcamsLayer.js" />
+    <Content Include="license.txt" />
+    <Content Include="oauth-callback.html" />
+    <Content Include="resources\configurationPanel.js" />
+    <Content Include="Web.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+    <Folder Include="Models\" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>55260</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:55260/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
