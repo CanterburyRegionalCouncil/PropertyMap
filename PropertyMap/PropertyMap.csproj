@@ -64,6 +64,7 @@
     <Content Include=".jshintrc" />
     <Content Include="css\PrintDialog.css" />
     <Content Include="css\BasemapDialog.css" />
+    <Content Include="css\TOCTree.css" />
     <Content Include="favicon.ico" />
     <Content Include="font\fontello.eot">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -83,11 +84,13 @@
     <Content Include="js\dijit\templates\PrintDialog.html" />
     <Content Include="js\dijit\templates\PrintResult.html" />
     <Content Include="js\dijit\templates\SuggestionSearch.html" />
+    <Content Include="js\dijit\templates\tocNode.html" />
     <Content Include="js\nls\BasemapDialog.js" />
     <Content Include="js\nls\PrintDialog.js" />
     <Content Include="js\BasemapDialog.js" />
     <Content Include="js\PrintDialog.js" />
     <Content Include="js\SuggestionSearch.js" />
+    <Content Include="js\TOCTree.js" />
     <Content Include="README.md" />
     <Content Include="resources\fontello-045f1512.zip" />
     <Content Include="packages.config" />

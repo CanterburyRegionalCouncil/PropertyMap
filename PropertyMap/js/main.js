@@ -17,6 +17,7 @@ define([
     "application/BasemapDialog",
     "application/Drawer",
     "application/DrawerMenu",
+    "application/TOCTree",
     "esri/dijit/HomeButton",
     "esri/dijit/LocateButton",
     "esri/dijit/BasemapToggle",
@@ -53,6 +54,7 @@ function (
     domClass,
     TableOfContents, ShareDialog, PrintDialog, BasemapDialog,
     Drawer, DrawerMenu,
+    TOCTree,
     HomeButton, LocateButton, BasemapToggle,
     Geocoder,
     Popup,
@@ -179,12 +181,33 @@ function (
             // layers
             var tocNode = dom.byId('TableOfContents'), socialTocNode, tocLayers, socialTocLayers, toc, socialToc;
             if (tocNode) {
-                tocLayers = this.layers;
-                toc = new TableOfContents({
-                    map: this.map,
-                    layers: tocLayers
-                }, tocNode);
-                toc.startup();
+                // Check if the standard layers panel is loaded or the TOC tree control - only one should be located
+                if (this.config.enableLayersPanel) {
+                    tocLayers = this.layers;
+                    toc = new TableOfContents({
+                        map: this.map,
+                        layers: tocLayers
+                    }, tocNode);
+                    toc.startup();
+                } else if (this.config.enableTOCTreePanel) {
+                    // Build the tocLayers List
+                    tocLayers = [];
+
+                    array.forEach(this.layers, function (layer) {
+                        var layerInfo = {
+                            layer: layer.layerObject,
+                            title: layer.title
+                        };
+                        tocLayers.push(layerInfo);
+                    });
+
+                    // Add the toc
+                    toc = new TOCTree({
+                        map: this.map,
+                        layerInfos: tocLayers
+                    }, tocNode);
+                    toc.startup();
+                }
             }
             // if we have social layers
             if (this.socialLayers && this.socialLayers.length) {
@@ -212,6 +235,9 @@ function (
                     socialToc.startup();
                 }
             }
+        },
+        _initTOCTree: function () {
+
         },
         _initDetailsPanel: function () {
             var detNode = dom.byId('DetailsDiv')
@@ -352,7 +378,7 @@ function (
                 }
             }
             // Layers Panel
-            if (this.config.enableLayersPanel) {
+            if (this.config.enableLayersPanel || this.config.enableTOCTreePanel) {
                 content = '';
                 content += '<div class="' + this.css.panelHeader + '">' + this.config.i18n.general.layers + '</div>';
                 content += '<div class="' + this.css.panelContainer + '">';

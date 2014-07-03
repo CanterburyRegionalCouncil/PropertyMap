@@ -34,6 +34,7 @@
     <link rel="stylesheet" type="text/css" href="css/dijit.css" />
     <link rel="stylesheet" type="text/css" href="css/fontello.css" />
     <link rel="stylesheet" type="text/css" href="css/TableOfContents.css" />
+    <link rel="stylesheet" type="text/css" href="css/TOCTree.css" />
     <link rel="stylesheet" type="text/css" href="css/HomeButton.css" />
     <link rel="stylesheet" type="text/css" href="css/LocateButton.css" />
     <link rel="stylesheet" type="text/css" href="css/SimpleSlider.css" />
