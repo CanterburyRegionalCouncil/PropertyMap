@@ -201,6 +201,9 @@ function (
                         tocLayers.push(layerInfo);
                     });
 
+                    // toc Tree related class to TableOfContents container
+                    domClass.add(tocNode, "agsjsTOCContainer");
+
                     // Add the toc
                     toc = new TOCTree({
                         map: this.map,
@@ -294,7 +297,7 @@ function (
             var currentIndex = this.map.infoWindow.selectedIndex;
 
             if (currentIndex == 0 && !domClass.contains(dom.byId("recordprevious"), "disabled")) {
-                domClass.add(dom.byId("recordprevious"), "disabled");
+                
             } else if (currentIndex != 0 && domClass.contains(dom.byId("recordprevious"), "disabled")) {
                 domClass.remove(dom.byId("recordprevious"), "disabled");
             }

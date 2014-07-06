@@ -1,4 +1,10 @@
-﻿.agsjsTOCNode {
+﻿/*  Added as part of the control modifications */
+.agsjsTOCContainer{
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.agsjsTOCNode {
     padding-top: 1px;
     padding-bottom: 1px;
 }
@@ -33,7 +39,7 @@
 }
 
 .agsjsTOCServiceLayer {
-    font-weight: bold;
+    /*font-weight: bold;*/
 }
 
 .agsjsTOCServiceLayerLabel {
