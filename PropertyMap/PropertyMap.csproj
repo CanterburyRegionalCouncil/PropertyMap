@@ -97,6 +97,13 @@
     <None Include="Properties\PublishProfiles\test1.ecan.govt.nz %28TEST%29.pubxml" />
     <Content Include="proxy.ashx" />
     <Content Include="proxy.config" />
+    <None Include="Web.config_template" />
+    <None Include="Web.Debug.config_template">
+      <DependentUpon>Web.config_template</DependentUpon>
+    </None>
+    <None Include="Web.Release.config_template">
+      <DependentUpon>Web.config_template</DependentUpon>
+    </None>
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
