@@ -3,7 +3,7 @@ define({
     //default web map, default app color theme and more. These values can be overwritten by template configuration settings
     //and url parameters.
     "appid": "",
-    "webmap": "3f4eca18d2424bc897e2058293f05deb",
+    "webmap": "7abe00dd99b74b669abb5bd592d7794e",
     "oauthappid": null,
     //Enter the url to the proxy if needed by the applcation. See the "Using the proxy page" help topic for details
     // //developers.arcgis.com/en/javascript/jshelp/ags_proxy.html
@@ -32,7 +32,7 @@ define({
     "enableModifiedDate": true,
     "enableMoreInfo": true,
     "enableParameterSearch": true,
-    "enableESRIGeocoder": true,
+    "enableESRIGeocoder": false,
     "enableSuggestionSearch": true,
 
     "defaultBasemap": "topo",

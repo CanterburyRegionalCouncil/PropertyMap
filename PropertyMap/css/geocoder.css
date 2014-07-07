@@ -158,6 +158,11 @@
     background-color: #007ac2;
     color: #fff;
 }
+
+.esriGeocoderResult .esriGeocoderResultPartial {
+    font-weight: 700;
+}
+
 .esriGeocoderMenu {
     display: none;
     width: 100%;

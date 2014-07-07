@@ -18,6 +18,7 @@ define([
     "application/Drawer",
     "application/DrawerMenu",
     "application/TOCTree",
+    "application/SuggestionSearch",
     "esri/dijit/HomeButton",
     "esri/dijit/LocateButton",
     "esri/dijit/BasemapToggle",
@@ -55,6 +56,7 @@ function (
     TableOfContents, ShareDialog, PrintDialog, BasemapDialog,
     Drawer, DrawerMenu,
     TOCTree,
+    SuggestionSearch,
     HomeButton, LocateButton, BasemapToggle,
     Geocoder,
     Popup,
@@ -246,7 +248,7 @@ function (
             var detNode = dom.byId('DetailsDiv')
             if (detNode) {
                 var bc = new BorderContainer({
-                    style: "width: 100%; height:800px;"
+                    style: "width: 100%; height:500px;"
                 });
 
                 var heading = new ContentPane({
@@ -566,6 +568,10 @@ function (
                 // geocoders
                 this._createGeocoders();
             }
+            if (this.config.enableSuggestionSearch) {
+                // Suggestion Search
+                this._createSuggestionSearch();
+            }
             // startup social
             this.initSocial();
             // startup map panel
@@ -799,6 +805,83 @@ function (
                 }));
             }
         },
+        _createSuggestionSearchOptions: function () {
+            // default options
+            var options = {
+                map: this.map,
+                autoNavigate: true,
+                autoComplete: true,
+                arcgisGeocoder: {
+                    placeholder: this.config.i18n.general.find
+                },
+                serviceURL: this.config.helperServices.suggestion.url,
+                geocoders: null
+            };
+            return options;
+        },
+        _createSuggestionSearch: function () {
+            // get options
+            var createdOptions = this._createSuggestionSearchOptions();
+            // desktop geocoder options
+            var desktopOptions = lang.mixin({}, createdOptions, {
+                theme: this.css.desktopGeocoderTheme
+            });
+            // mobile geocoder options
+            var mobileOptions = lang.mixin({}, createdOptions, {
+                theme: this.css.mobileGeocoderTheme
+            });
+            // desktop size geocoder
+            this._geocoder = new SuggestionSearch(desktopOptions, dom.byId("geocoderSearch"));
+            this._geocoder.startup();
+            // geocoder results
+            on(this._geocoder, 'find-results', lang.hitch(this, function (response) {
+                if (!response.results || !response.results.results || !response.results.results.length) {
+                    alert(this.config.i18n.general.noSearchResult);
+                }
+            }));
+            // mobile sized geocoder
+            this._mobileGeocoder = new SuggestionSearch(mobileOptions, dom.byId("geocoderMobile"));
+            this._mobileGeocoder.startup();
+            // geocoder results
+            on(this._mobileGeocoder, 'find-results', lang.hitch(this, function (response) {
+                if (!response.results || !response.results.results || !response.results.results.length) {
+                    alert(this.config.i18n.general.noSearchResult);
+                }
+                this._hideMobileGeocoder();
+            }));
+            // keep geocoder values in sync
+            this._geocoder.watch("value", lang.hitch(this, function () {
+                var value = arguments[2];
+                this._mobileGeocoder.set("value", value);
+            }));
+            // keep geocoder values in sync
+            this._mobileGeocoder.watch("value", lang.hitch(this, function () {
+                var value = arguments[2];
+                this._geocoder.set("value", value);
+            }));
+            // geocoder nodes
+            this._mobileGeocoderIconNode = dom.byId("mobileGeocoderIcon");
+            this._mobileSearchNode = dom.byId("mobileSearch");
+            this._mobileGeocoderIconContainerNode = dom.byId("mobileGeocoderIconContainer");
+            // mobile geocoder toggle 
+            if (this._mobileGeocoderIconNode) {
+                on(this._mobileGeocoderIconNode, "click", lang.hitch(this, function () {
+                    if (domStyle.get(this._mobileSearchNode, "display") === "none") {
+                        this._showMobileGeocoder();
+                    } else {
+                        this._hideMobileGeocoder();
+                    }
+                }));
+            }
+            var closeMobileGeocoderNode = dom.byId("btnCloseGeocoder");
+            if (closeMobileGeocoderNode) {
+                // cancel mobile geocoder
+                on(closeMobileGeocoderNode, "click", lang.hitch(this, function () {
+                    this._hideMobileGeocoder();
+                }));
+            }
+        },
+
         // hide map loading spinner
         _hideLoadingIndicator: function () {
             // add loaded class

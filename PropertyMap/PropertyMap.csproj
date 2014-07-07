@@ -86,6 +86,7 @@
     <Content Include="js\dijit\templates\SuggestionSearch.html" />
     <Content Include="js\dijit\templates\tocNode.html" />
     <Content Include="js\nls\BasemapDialog.js" />
+    <Content Include="js\nls\SuggestionSearch.js" />
     <Content Include="js\nls\PrintDialog.js" />
     <Content Include="js\BasemapDialog.js" />
     <Content Include="js\PrintDialog.js" />
