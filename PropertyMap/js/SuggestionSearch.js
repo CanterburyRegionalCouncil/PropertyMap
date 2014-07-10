@@ -116,7 +116,8 @@ function (
                 activeGeocoder: null,
                 geocoders: null,
                 zoomScale: 10000,
-                serviceURL: null
+                serviceURL: null,
+                classFilter: null
             };
             // mix in settings and defaults
             var defaults = lang.mixin({}, this.options, options);
@@ -136,6 +137,8 @@ function (
             this.set("activeGeocoder", defaults.activeGeocoder);
             this.set("geocoders", defaults.geocoders);
             this.set("zoomScale", defaults.zoomScale);
+            this.set("serviceURL", defaults.serviceURL);
+            this.set("classFilter", defaults.classFilter);
             // results holder
             this.set("results", []);
             // languages
@@ -149,9 +152,6 @@ function (
             this.watch("theme", this._updateTheme);
             this.watch("activeGeocoder", this._setActiveGeocoder);
             this.watch("activeGeocoderIndex", this._setActiveGeocoderIndex);
-            //this.watch("geocoders", this._updateGeocoder);
-            //this.watch("arcgisGeocoder", this._updateGeocoder);
-            //this.watch("geocoderMenu", this._updateGeocoder);
             this.watch("map", this._setupEvents);
             // widget node
             this.domNode = srcRefNode;
@@ -619,7 +619,8 @@ function (
                     content: {
                         f: "pjson",
                         searchlimit: this.maxLocations,
-                        searchterm: e.search
+                        searchterm: e.search,
+                        searchClass: this.classFilter
                     },
                     handleAs: "json",
                     callbackParamName: 'callback',
@@ -898,7 +899,12 @@ function (
                             if (result.suggestion) {
                                 // Do pass to main application to do search;
 
-
+                                // emit event with response
+                                this.onFindResults(result);
+                                // hide menus
+                                this._hideMenus();
+                                // hide loading spinner
+                                this._hideLoading();
                             } else {
                                 var magicKey = result.magicKey || null;
                                 // new immediate query for result
@@ -1227,24 +1233,6 @@ function (
                 }
                 // create graphic feature
                 newResult.feature = new Graphic(pt, null, attributes, null);
-            //}
-            //// Suggestion search result
-            //else if (e.hasOwnProperty('label')) {
-            //    // create point
-            //    var x, y;
-            //    if (sr.wkid = 4326) {
-            //        x = e.value.longitude;
-            //        y = e.value.latitude;
-            //    } else {
-            //        x = e.value.x;
-            //        y = e.value.y;
-            //    }
-            //    var pt = new Point(x, y, sR);
-
-            //    var attributes = e.value;
-
-            //    // create graphic feature
-            //    newResult.feature = new Graphic(pt, null, attributes, null);
             } else {
                 newResult.feature = null;
             }

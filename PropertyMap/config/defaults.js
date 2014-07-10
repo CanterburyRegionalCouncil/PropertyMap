@@ -11,6 +11,8 @@ define({
     //Example of a template specific property. If your template had several color schemes
     //you could define the default here and setup configuration settings to allow users to choose a different
     //color theme.
+    "showESRILogo": false,
+    "showAttribution": false,
     "title": "",
     "summary": "",
     "defaultPanel": "details",
@@ -34,7 +36,6 @@ define({
     "enableParameterSearch": true,
     "enableESRIGeocoder": false,
     "enableSuggestionSearch": true,
-
     "defaultBasemap": "topo",
     "nextBasemap": "hybrid",
     "notesLayer": null, //{
@@ -89,7 +90,8 @@ define({
             "url": "http://gis.ecan.govt.nz/arcgis/rest/services/Utilities/Geometry/GeometryServer"
         },
         "printTask": {
-            "url": "http://gis.ecan.govt.nz/arcgis/rest/services/Utilities/PrintingTools/GPServer/Export%20Web%20Map%20Task",
+            "url": "http://gis.ecan.govt.nz/arcgis/rest/services/Printing/MapPrinting/GPServer/Export%20Web%20Map",
+            "isAsync": true,
             "defaultAuthor": "Canterbury Maps",
             "defaultCopyright": "Copyright",
             "defaultTitle": "Canterbury Maps",
@@ -103,7 +105,8 @@ define({
             "url": null
         }],
         "suggestion": {
-            "url": "http://canterburymaps.govt.nz/ViewerWebServices/Search.ashx"
+            "url": "http://canterburymaps.govt.nz/ViewerWebServices/Search.ashx",
+            "filter": "PAR,VAL,RDI,OSM,NAM"
         }
     },
     "searchSettings": {

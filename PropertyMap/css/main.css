@@ -567,16 +567,24 @@ input[type=text]::-ms-clear {
 
 .drawer-menu-container {
     width: 280px;
+    height: 100%;
+}
+
+.drawer-menu-panels {
+    width: 100%;
+    /*height: 100%;*/
 }
 
 .drawer-menu-panels .panel {
     display: none;
     width: 100%;
+    height: 100%;
 }
 
 .drawer-menu-panels .panel-selected {
     display: block;
     width: 100%;
+    /*height: 100%;*/
 }
 
 .drawer-menu-buttons {
@@ -844,6 +852,7 @@ input[type=text]::-ms-clear {
 
     .drawer-menu-container {
         width: 200px;
+        height: 100%;
     }
 }
 

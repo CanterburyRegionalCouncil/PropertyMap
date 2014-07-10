@@ -28,6 +28,7 @@ define([
     "esri/tasks/PrintTask",
     "esri/tasks/PrintParameters",
     "esri/tasks/PrintTemplate",
+    "esri/tasks/LegendLayer",
     "dijit/form/Form",
     "dijit/form/Select",
     "dijit/form/ValidationTextBox",
@@ -61,6 +62,7 @@ define([
         PrintTask,
         PrintParameters,
         PrintTemplate,
+        LegendLayer,
         Form,
         Select,
         ValidationTextBox,
@@ -83,7 +85,6 @@ define([
                 dialog: null,
                 useExtent: false,
                 map: null,
-
                 authorText: null,
                 copyrightText: null,
                 defaultFormat: null,
@@ -91,7 +92,9 @@ define([
                 defaultTitle: null,
                 title: window.document.title,
                 summary: '',
-                hashtags: ''
+                hashtags: '',
+                isAsync: true,
+                mapDefinition : null
             },
             count: 1,
             results: [],
@@ -115,6 +118,8 @@ define([
                 this.set("hashtags", defaults.hashtags);
                 this.set("useExtent", defaults.useExtent);
                 this.set("defaultMapTitle", defaults.defaultTitle);
+                this.set("isAsync", defaults.isAsync);
+                this.set("mapDefinition", defaults.mapDefinition);
 
                 // listeners
                 this.watch("theme", this._updateThemeWatch);
@@ -146,7 +151,7 @@ define([
             postCreate: function () {
                 this.inherited(arguments);
 
-                this.printTask = new PrintTask(this.printTaskURL);
+                this.printTask = new PrintTask(this.printTaskURL, { 'async': this.isAsync });
                 this.printparams = new PrintParameters();
                 this.printparams.map = this.map;
                 this.printparams.outSpatialReference = this.map.spatialReference;
@@ -164,10 +169,11 @@ define([
                 aspect.after(this.printTask, '_getPrintDefinition', lang.hitch(this, 'printDefInspector'), false);
 
                 // add proxy rule
-                urlUtils.addProxyRule({
-                    urlPrefix: "gis.ecan.govt.nz/arcgis/rest/services/Utilities/PrintingTools",
-                    proxyUrl: esriConfig.defaults.io.proxyUrl
-                });
+                //var printRuleURL = this.printTaskURL.replace("http://", "").replace("/GPServer/Export%20Web%20Map", "");
+                //urlUtils.addProxyRule({
+                //    urlPrefix: printRuleURL,
+                //    proxyUrl: esriConfig.defaults.io.proxyUrl
+                //});
 
                 this.own(on(this._buttonNode, a11yclick, lang.hitch(this, this.toggle)));
             },
@@ -418,13 +424,42 @@ define([
                     template.preserveScale = (form.preserveScale === 'true' || form.preserveScale === 'force');
                     template.label = form.title;
                     template.exportOptions = mapOnlyForm;
+
+                    // Populate the legend options
+                    var layers = this.map.getLayersVisibleAtScale(this.map.getScale());
+                    var legendLayers = [];
+                    var tiledLayers = [];
+
+                    array.forEach(layers, function (layer) {
+                        var legendItem = new LegendLayer();
+                        legendItem.layerId = layer.id;
+                        if (layer.visibleLayers)
+                            legendItem.subLayerIds = layer.visibleLayers;
+
+                        if (layer.tileInfo) {
+                            var tInfo = {
+                                'id': layer.id,
+                                'url': layer.url,
+                                'title': layer.title
+                            };
+                            
+                            tiledLayers.push(tInfo);
+                        }
+
+                        legendLayers.push(legendItem);
+                    });
+
                     template.layoutOptions = {
                         authorText: form.author,
                         copyrightText: form.copyright,
-                        legendLayers: (this.layoutForm.legend.length > 0 && this.layoutForm.legend[0]) ? null : [],
-                        titleText: form.title //,
+                        legendLayers: (this.layoutForm.legend.length > 0 && this.layoutForm.legend[0]) ? null : legendLayers,
+                        titleText: form.title,
+                        extraParameters: {
+                            'tiledLayers': tiledLayers
+                        }
                         //scalebarUnit: this.layoutForm.scalebarUnit
                     };
+
                     this.printparams.template = template;
 
                     var fileHandel = this.printTask.execute(this.printparams);

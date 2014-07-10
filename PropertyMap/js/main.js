@@ -248,7 +248,7 @@ function (
             var detNode = dom.byId('DetailsDiv')
             if (detNode) {
                 var bc = new BorderContainer({
-                    style: "width: 100%; height:500px;"
+                    style: "width: 100%; height: 100%;"
                 });
 
                 var heading = new ContentPane({
@@ -266,12 +266,22 @@ function (
                 });
                 bc.addChild(this._PopupPanel);
 
+                var footer = new ContentPane({
+                    region: "bottom",
+                    style: "height: 30px",
+                    content: "<div style=\"display:block; width: 100%;\"><a href='javascript:void(0);' id =\"zoomToRecord\" class=\"nav\" style=\"text-decoration: none;\" title=\"Zoom To Current\">\Zoom To Current</a></div>"
+                });
+                bc.addChild(footer);
+
+
+
                 bc.placeAt(detNode);
                 bc.startup();
 
-                //setup event handlers for the next/previous buttons
+                //setup event handlers for the buttons
                 on(dom.byId("recordprevious"), "click", lang.hitch(this, function () { this._selectPrevious(); }));
                 on(dom.byId("recordnext"), "click", lang.hitch(this, function () { this._selectNext(); }));
+                on(dom.byId("zoomToRecord"), "click", lang.hitch(this, function () { this._zoomCurrent(); }));
             }
         },
         _selectPrevious: function () {
@@ -293,6 +303,13 @@ function (
                 }
             }));
             this.map.infoWindow.selectNext();
+        },
+        _zoomCurrent: function () {
+            // Zoom to tyhe currently selected feature in the details panel
+            var feature = this.map.infoWindow.getSelectedFeature();
+            if (feature) {
+                this._zoomToFeatures([feature]);
+            }
         },
         _updateRecordButtonState: function () {
             var recordCount = this.map.infoWindow.count;
@@ -407,11 +424,10 @@ function (
             // Details Panel
             if (this.config.enableDetailsPanel) {
                 content = '';
-                //content += '<div class="' + this.css.panelHeader + '">' + this.config.i18n.general.legend + '</div>';
                 content += '<div class="' + this.css.panelHeader + '">Details</div>';
-                content += '<div class="' + this.css.panelContainer + '">';
-                content += '<div class="' + this.css.panelPadding + '">';
-                content += '<div id="DetailsDiv" ></div>';
+                content += '<div class="' + this.css.panelContainer + '" >';
+                content += '<div class="' + this.css.panelPadding + '" >';
+                content += '<div id="DetailsDiv" style="height: 400px;"></div>';
                 content += '</div>';
                 content += '</div>';
                 // menu info
@@ -449,7 +465,6 @@ function (
                 ////When features are associated with the  map's info window update the sidebar with the new content. 
                 connect.connect(popup, "onSetFeatures", lang.hitch(this, function (event) {
                     this._displayPopupContent(popup.getSelectedFeature());
-                    //dom.byId("featureCount").innerHTML = popup.features.length + " feature(s) selected";
 
                     //enable navigation if more than one feature is selected 
                     popup.features.length > 1 ? domUtils.show(dom.byId("pager")) : domUtils.hide(dom.byId("pager"));
@@ -530,6 +545,9 @@ function (
             }
             // print dialog
             if (this.config.enablePrintDialog) {
+                
+                var itemInfo = this.config.itemInfo || this.config.webmap; 
+                
                 this._PrintDialog = new PrintDialog({
                     theme: this.css.iconRight,
                     map: this.map,
@@ -538,12 +556,13 @@ function (
                     hashtags: 'esriPIM',
 
                     printTaskURL: this.config.helperServices.printTask.url,
+                    isAsync: this.config.helperServices.printTask.isAsync,
                     defaultAuthor: this.config.helperServices.printTask.defaultAuthor,
                     defaultCopyright: this.config.helperServices.printTask.defaultCopyright,
                     defaultTitle: this.config.helperServices.printTask.defaultTitle,
                     defaultFormat: this.config.helperServices.printTask.defaultFormat,
-                    defaultLayout: this.config.helperServices.printTask.defaultLayout
-
+                    defaultLayout: this.config.helperServices.printTask.defaultLayout,
+                    mapDefinition: itemInfo
                 }, 'PrintDialog');
                 this._PrintDialog.startup();
             }
@@ -815,6 +834,7 @@ function (
                     placeholder: this.config.i18n.general.find
                 },
                 serviceURL: this.config.helperServices.suggestion.url,
+                classFilter: this.config.helperServices.suggestion.filter,
                 geocoders: null
             };
             return options;
@@ -835,8 +855,50 @@ function (
             this._geocoder.startup();
             // geocoder results
             on(this._geocoder, 'find-results', lang.hitch(this, function (response) {
-                if (!response.results || !response.results.results || !response.results.results.length) {
+                if (!response.results || !response.results.suggestion) {
                     alert(this.config.i18n.general.noSearchResult);
+                } else {
+                    // Get the search seting with the given value
+                    var srch = this.config.searchSettings[response.results.suggestion.searchclass];
+                    if (srch) {
+                        // Initiate a search agains the configured layer
+                        this._initiateLayerQuery(srch, response.results.suggestion.searchkey);
+                    } else {
+                        // Zoom to the location specified and initiate a click event for the popups
+                        var pt;
+
+                        switch (this.map.spatialReference.wkid)
+                        {
+                            case 4326:
+                            case 102100:
+                                // use the lat/long values for the zoom to point
+                                pt = new Point(response.results.suggestion.longitude, response.results.suggestion.latitude);
+                                break;
+
+                            default:
+                                // Use the suggestion x and y values for the zoom to point
+
+                                // Check for x and y values 
+                                if (response.results.suggestion.x != 0 && response.results.suggestion.y != 0) {
+                                    pt = new Point(response.results.suggestion.x, response.results.suggestion.y, this.map.spatialReference);
+                                }
+                                break;
+                        }
+
+                        // Centre the map on the given point 
+                        if (pt) {
+                            this.map.centerAt(pt);
+
+                            var screenPt = this.map.toScreen(pt);
+                            var event = document.createEvent('MouseEvents');
+                            event.initMouseEvent('click', true, true, document.defaultView, 0,
+                                0, 0, 0, 0, false, false, false, false, 0, null);
+                            event.mapPoint = pt;
+                            event.screenPoint = screenPt;
+
+                            this.map.emit('click', event);
+                        }
+                    }
                 }
             }));
             // mobile sized geocoder
@@ -912,7 +974,9 @@ function (
             //can be defined for the popup like modifying the highlight symbol, margin etc.
             arcgisUtils.createMap(itemInfo, "mapDiv", {
                 mapOptions: {
-                    infoWindow: customPopup
+                    infoWindow: customPopup,
+                    showAttribution: this.config.showAttribution,
+                    logo: this.config.showESRILogo
                     //Optionally define additional map config here for example you can
                     //turn the slider off, display info windows, disable wraparound 180, slider position and more.
                 },
@@ -948,7 +1012,7 @@ function (
                 registry.byId("DetailsPanel").set("content", content);
 
                 // Zome to the extent of the feature
-                this._zoomToFeatures([feature]);
+                //this._zoomToFeatures([feature]);
             }
 
             // Update the records button state
@@ -977,10 +1041,10 @@ function (
                     ext = shape.getExtent();
                 }
 
-                this.map.setExtent(ext.expand(1.2));
+                this.map.setExtent(ext.expand(1.2), true);
             } else if (features.length > 1) {
                 ext = graphicsUtils.graphicsExtent(features);
-                this.map.setExtent(ext.expand(1.2));
+                this.map.setExtent(ext.expand(1.2), true);
             }
             // else do nothing
         },
@@ -1005,6 +1069,10 @@ function (
 
             // CHeck if a search layer has been created and if it
             if (this._searchLayer && this._searchLayer.url && this._searchLayer.url == layerInfo.url) {
+                // Update the deinition expression
+                this._searchLayer.setDefinitionExpression(this._searchQuery.where);
+
+                // Execute the new search
                 var deferred = this._searchLayer.selectFeatures(this._searchQuery, FeatureLayer.SELECTION_NEW);
                 this.map.infoWindow.setFeatures([deferred]);
 
@@ -1037,25 +1105,29 @@ function (
                 // Attach to load event to initiate the search
                 this._searchLayer.on("load", lang.hitch(this, function (evt) {
                     var layer = evt.layer;
-                    var symbol;
 
+                    // Set the layer alpha
+                    layer.opacity = 0.7;
+
+
+                    var symbol;
 
                     // Set the renderer
                     switch (layer.geometryType) {
                         case "esriGeometryPoint":
                             symbol = new SimpleMarkerSymbol(SimpleMarkerSymbol.STYLE_SQUARE, 14,
                                         new SimpleLineSymbol(SimpleLineSymbol.STYLE_SOLID, new Color([255, 0, 0], 0.7), 1),
-                                        new Color([255, 0, 0, 0.35]));
+                                        new Color([255, 120, 0, 1]));
                             break;
 
                         case "esriGeometryPolyline":
-                            symbol = new SimpleLineSymbol(SimpleLineSymbol.STYLE_SOLID, new Color([255, 0, 0, 0.35]), 2);
+                            symbol = new SimpleLineSymbol(SimpleLineSymbol.STYLE_SOLID, new Color([255, 0, 0]), 2);
                             break;
 
                         case "esriGeometryPolygon":
                             symbol = new SimpleFillSymbol(SimpleFillSymbol.STYLE_SOLID,
-                                        new SimpleLineSymbol(SimpleLineSymbol.STYLE_SOLID, new Color([255, 0, 0, 0.7]), 1),
-                                        new Color([255, 0, 0, 0.35]));
+                                        new SimpleLineSymbol(SimpleLineSymbol.STYLE_SOLID, new Color([255, 0, 0]), 1),
+                                        new Color([255, 120, 0, 1]));
                             break;
                     }
                     this._searchLayer.setRenderer(new SimpleRenderer(symbol));
@@ -1070,7 +1142,6 @@ function (
                         "layer": this._searchLayer
                     });
                 }
-
                 this.map.addLayer(this._searchLayer);
             }
         }

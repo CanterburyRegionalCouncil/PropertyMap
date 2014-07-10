@@ -118,7 +118,7 @@ public class proxy : IHttpHandler {
                     {
                         // Check if this is a feature layer and get the url if it is
                         var layerurl = layer["url"];
-                        if (layerurl != null) // && layerurl.ToString() == "http://gis.ecan.govt.nz/arcgis/rest/services/Public/Resource_Consents/MapServer")
+                        if (layerurl != null) 
                         {
                             // Check if map export request is for 96 DPI - no need to substitute if this is the case as this will match the tile cahce
                             
