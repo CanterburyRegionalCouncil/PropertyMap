@@ -17,6 +17,7 @@ define([
     "application/BasemapDialog",
     "application/Drawer",
     "application/DrawerMenu",
+    "application/Logo",
     "application/TOCTree",
     "application/SuggestionSearch",
     "esri/dijit/HomeButton",
@@ -55,6 +56,7 @@ function (
     domClass,
     TableOfContents, ShareDialog, PrintDialog, BasemapDialog,
     Drawer, DrawerMenu,
+    Logo,
     TOCTree,
     SuggestionSearch,
     HomeButton, LocateButton, BasemapToggle,
@@ -169,6 +171,18 @@ function (
             element.style.cssText = 'pointer-events:auto';
             return element.style.pointerEvents === 'auto';
         },
+        _initLogo: function () {
+            if (this.config.showOrgLogo) {
+                var logoNode = dom.byId('LogoDiv');
+                if (logoNode) {
+                    this._logo = new Logo({
+                        map: this.map,
+                        url: this.config.orgLogoLinkUrl
+                    }, logoNode);
+                    this._logo.startup();
+                }
+            }
+        },
         _initLegend: function () {
             var legendNode = dom.byId('LegendDiv');
             if (legendNode) {
@@ -240,9 +254,6 @@ function (
                     socialToc.startup();
                 }
             }
-        },
-        _initTOCTree: function () {
-
         },
         _initDetailsPanel: function () {
             var detNode = dom.byId('DetailsDiv')
@@ -316,7 +327,7 @@ function (
             var currentIndex = this.map.infoWindow.selectedIndex;
 
             if (currentIndex == 0 && !domClass.contains(dom.byId("recordprevious"), "disabled")) {
-                
+
             } else if (currentIndex != 0 && domClass.contains(dom.byId("recordprevious"), "disabled")) {
                 domClass.remove(dom.byId("recordprevious"), "disabled");
             }
@@ -545,9 +556,8 @@ function (
             }
             // print dialog
             if (this.config.enablePrintDialog) {
-                
-                var itemInfo = this.config.itemInfo || this.config.webmap; 
-                
+                var itemInfo = this.config.itemInfo || this.config.webmap;
+
                 this._PrintDialog = new PrintDialog({
                     theme: this.css.iconRight,
                     map: this.map,
@@ -603,6 +613,8 @@ function (
             this._initDetailsPanel();
             // set social dialogs
             this.configureSocial();
+            // startup the logo
+            this._initLogo();
             // on body click containing underlay class
             on(document.body, '.dijitDialogUnderlay:click', function () {
                 // get all dialogs
@@ -867,8 +879,7 @@ function (
                         // Zoom to the location specified and initiate a click event for the popups
                         var pt;
 
-                        switch (this.map.spatialReference.wkid)
-                        {
+                        switch (this.map.spatialReference.wkid) {
                             case 4326:
                             case 102100:
                                 // use the lat/long values for the zoom to point

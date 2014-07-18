@@ -1064,3 +1064,20 @@ a.nav.disabled {
 .featureCount {
     font-size: 0.7em;
 }
+
+/* Logo Widget CSS*/
+.logo-widget {
+    width: 60px;
+    height: 45px;
+    vertical-align: bottom;
+    display: inline-block;
+    z-index: 400;
+    cursor: pointer;
+    background-image: url("../images/canterbury-maps-logo-no-label-small.png");
+    background-repeat: no-repeat;
+    background-size: contain;
+    position:absolute;
+    bottom: 5px;
+    right: 5px;
+}
+

@@ -12,6 +12,8 @@ define({
     //you could define the default here and setup configuration settings to allow users to choose a different
     //color theme.
     "showESRILogo": false,
+    // Show an organisation logo on the map.  When using thsi, set the esri logo to false as they will occupy the same location.  When true, if the orLogoLinkURL is populated, this will add a click event that opens the specified url on the orgLogoLinkURL setting which clicking the logo. 
+    "showOrgLogo": true,
     "showAttribution": false,
     "title": "",
     "summary": "",
@@ -85,6 +87,7 @@ define({
         "SEARCH"
     ],
     "units": null,
+    "orgLogoLinkUrl":"http://canterburymaps.govt.nz",
     "helperServices": {
         "geometry": {
             "url": "http://gis.ecan.govt.nz/arcgis/rest/services/Utilities/Geometry/GeometryServer"

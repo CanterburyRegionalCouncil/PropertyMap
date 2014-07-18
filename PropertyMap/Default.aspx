@@ -100,6 +100,7 @@
                 <div id="BasemapToggle"></div>
                 <div id="mapDiv" dir="ltr">
                     <div id="swipeDiv"></div>
+                    <div id="LogoDiv"></div>
                 </div>
             </div>
         </div>

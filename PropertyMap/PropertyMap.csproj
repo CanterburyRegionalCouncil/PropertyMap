@@ -75,17 +75,21 @@
     <Content Include="font\fontello.woff">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="images\canterbury-maps-logo-no-label-small.png" />
     <Content Include="images\clear.png" />
     <Content Include="images\image.png" />
     <Content Include="images\pdf.png" />
     <Content Include="images\print.png" />
     <Content Include="images\settings.png" />
     <Content Include="js\dijit\templates\BasemapDialog.html" />
+    <Content Include="js\dijit\templates\Logo.html" />
     <Content Include="js\dijit\templates\PrintDialog.html" />
     <Content Include="js\dijit\templates\PrintResult.html" />
     <Content Include="js\dijit\templates\SuggestionSearch.html" />
     <Content Include="js\dijit\templates\tocNode.html" />
+    <Content Include="js\Logo.js" />
     <Content Include="js\nls\BasemapDialog.js" />
+    <Content Include="js\nls\Logo.js" />
     <Content Include="js\nls\SuggestionSearch.js" />
     <Content Include="js\nls\PrintDialog.js" />
     <Content Include="js\BasemapDialog.js" />
