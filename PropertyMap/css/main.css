@@ -1081,3 +1081,4 @@ a.nav.disabled {
     right: 5px;
 }
 
+.dijitTooltip {max-width: 150px;}

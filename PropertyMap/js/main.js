@@ -5,8 +5,8 @@ define([
     "esri/arcgis/utils",
     "dojo/dom-construct",
     "dojo/dom",
-    "dijit/layout/BorderContainer", "dijit/layout/ContentPane",
-    "dijit/TitlePane",
+    "dojo/mouse",
+    "dijit/layout/BorderContainer", "dijit/layout/ContentPane", "dijit/TitlePane",  "dijit/Tooltip",
     "dojo/on",
     "dojo/dom-style",
     "dojo/dom-attr",
@@ -49,7 +49,8 @@ function (
     arcgisUtils,
     domConstruct,
     dom,
-    BorderContainer, ContentPane, TitlePane,
+    mouse,
+    BorderContainer, ContentPane, TitlePane, Tooltip,
     on,
     domStyle,
     domAttr,
@@ -280,11 +281,9 @@ function (
                 var footer = new ContentPane({
                     region: "bottom",
                     style: "height: 30px",
-                    content: "<div style=\"display:block; width: 100%;\"><a href='javascript:void(0);' id =\"zoomToRecord\" class=\"nav\" style=\"text-decoration: none;\" title=\"Zoom To Current\">\Zoom To Current</a></div>"
+                    content: "<div style=\"display:block; width: 100%;\"><a href='javascript:void(0);' id =\"zoomToRecord\" class=\"nav\" style=\"text-decoration: none;\" title=\"Zoom To Current\">\Zoom To Current</a></div><div id=\"featureTags\" class=\"idFeatureTags\"></div>"
                 });
                 bc.addChild(footer);
-
-
 
                 bc.placeAt(detNode);
                 bc.startup();
@@ -479,6 +478,19 @@ function (
 
                     //enable navigation if more than one feature is selected 
                     popup.features.length > 1 ? domUtils.show(dom.byId("pager")) : domUtils.hide(dom.byId("pager"));
+
+                    ////construct feature tags
+                    //var html = "";
+                    //array.forEach(popup.features, function (feature) {
+                    //    html += "<a href=\"javascript:void(0);\" class=\"featureTag\">" + feature.getLayer().name + "</>&nbsp;";
+                    //});
+
+                    //dom.byId("featureTags").innerHTML = html;
+                }));
+
+                ////Connect an extant change handler to the map to deal with showing/hiding the tooltip dialog for zoom to extent  
+                connect.connect(this.map, "onExtentChange", lang.hitch(this, function (event) {
+                    this._checkFeatureExtents(event.extent);
                 }));
             }
             // menus
@@ -1021,9 +1033,6 @@ function (
             if (feature) {
                 var content = feature.getContent();
                 registry.byId("DetailsPanel").set("content", content);
-
-                // Zome to the extent of the feature
-                //this._zoomToFeatures([feature]);
             }
 
             // Update the records button state
@@ -1038,7 +1047,37 @@ function (
             // Force the details view to be selected 
             this._drawerMenu.select(0);
         },
+        // Check if current ID features fall within the current extent
+        _checkFeatureExtents: function (extent) {
+            var inExtent = true;
 
+            // Get the map and current selection features
+            var feature = this.map.infoWindow.getSelectedFeature();
+            if (feature) {
+                if (extent == null) {
+                    // Get the map extent 
+                    extent = this.map.extent;
+                }
+
+                if (feature.geometry.type == "point") {
+                    inExtent = extent.contains(feature.geometry);
+                } else {
+                    inExtent = extent.contains(feature.geometry.getExtent());
+                }
+            }
+            // Update the tooltip
+            this._toggleInExtentTooltip(!inExtent);
+        },
+        _toggleInExtentTooltip: function (showTooltip) {
+            var node = dom.byId("zoomToRecord")
+            Tooltip.hide(node);
+            if (showTooltip) {
+                Tooltip.show("This feature extends beyond the visible extent of the map", node);
+                on.once(node, mouse.leave, function () {
+                    Tooltip.hide(node);
+                });
+            }
+        },
         // Zoom to show the extent of the given features
         _zoomToFeatures: function (features) {
             var ext;
@@ -1118,8 +1157,7 @@ function (
                     var layer = evt.layer;
 
                     // Set the layer alpha
-                    layer.opacity = 0.7;
-
+                    layer.opacity = 0.5;
 
                     var symbol;
 
@@ -1127,8 +1165,8 @@ function (
                     switch (layer.geometryType) {
                         case "esriGeometryPoint":
                             symbol = new SimpleMarkerSymbol(SimpleMarkerSymbol.STYLE_SQUARE, 14,
-                                        new SimpleLineSymbol(SimpleLineSymbol.STYLE_SOLID, new Color([255, 0, 0], 0.7), 1),
-                                        new Color([255, 120, 0, 1]));
+                                        new SimpleLineSymbol(SimpleLineSymbol.STYLE_SOLID, new Color([255, 0, 0]), 2),
+                                        new Color([255, 255, 255, 0.9]));
                             break;
 
                         case "esriGeometryPolyline":
@@ -1137,8 +1175,8 @@ function (
 
                         case "esriGeometryPolygon":
                             symbol = new SimpleFillSymbol(SimpleFillSymbol.STYLE_SOLID,
-                                        new SimpleLineSymbol(SimpleLineSymbol.STYLE_SOLID, new Color([255, 0, 0]), 1),
-                                        new Color([255, 120, 0, 1]));
+                                        new SimpleLineSymbol(SimpleLineSymbol.STYLE_SOLID, new Color([255, 0, 0]), 2),
+                                        new Color([255, 255, 255, 0.9]));
                             break;
                     }
                     this._searchLayer.setRenderer(new SimpleRenderer(symbol));
