@@ -161,11 +161,6 @@ function (
         /* ---------------- */
         // start widget
         startup: function () {
-            //if (!this._geocoders.length) {
-            //    console.log('Geocoder:: No geocoders defined.');
-            //    this.destroy();
-            //    return;
-            //}
             if (!this.domNode) {
                 console.log('Geocoder:: domNode is undefined.');
                 this.destroy();
@@ -209,9 +204,6 @@ function (
             this.own(
                 on(this.geocoderMenuCloseNode, a11yclick, lang.hitch(this, this._hideGeolocatorMenu))
             );
-            // build geocoder list
-            //this._updateGeocoder();
-            // setup connections
             this._setupEvents();
             // add clear button if already populated
             if (this.get("value")) {
@@ -219,6 +211,9 @@ function (
             }
             // hide menus
             this._hideMenus();
+
+            // update placeholder nodes
+            this._updatePlaceholder();
         },
         destroy: function () {
             this._removeEvents();
@@ -243,6 +238,9 @@ function (
             this._hideMenus();
             // hide loading
             this._hideLoading();
+
+            // update placeholder nodes
+            this._updatePlaceholder();
         },
         // show widget
         show: function () {
@@ -517,7 +515,7 @@ function (
         // Update placeholder nodes
         _updatePlaceholder: function () {
             // reset placehodler text to nothing
-            this._placeholder = '';
+            this._placeholder = 'Address, road or place name';
             // if placeholder of active geocoder is set
             if (this.get("activeGeocoder") && this.get("activeGeocoder").placeholder) {
                 // set placeholder to active geocoder placeholder

@@ -647,6 +647,11 @@ function (
                 // Get the search seting with the given value
                 var srch = this.config.searchSettings[s[0]];
                 if (srch) {
+                    // Check if an extent has been suppplied as a URL param - if so this gets priority over the feature extent 
+                    if (this.config.extent) {
+                        this.useURLExtent = true;
+                    }
+
                     this._initiateLayerQuery(srch, s[1]);
                 }
             }
@@ -1149,7 +1154,12 @@ function (
                     // Get the extent of the features
                     var layer = evt.target, ext;
                     var features = layer.getSelectedFeatures();
-                    this._zoomToFeatures(features);
+
+                    if (!this.useURLExtent) {
+                        this._zoomToFeatures(features);
+                    } else {
+                        this.useURLExtent = false;
+                    }
                 }));
 
                 // Attach to load event to initiate the search

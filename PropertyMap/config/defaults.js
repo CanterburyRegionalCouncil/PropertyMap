@@ -164,6 +164,62 @@ define({
                 "title": "Street Address: {address}"
             }
         },
+        "RDI": {
+            "url": "http://gis.ecan.govt.nz/arcgis/rest/services/Public/Region_Base/MapServer/5",
+            "expression": "OBJECTID  = {0}",
+            "fields": "*",
+            "titlefield": {
+                "field": "name",
+                "label": "Road : "
+            },
+            "infoTemplate": {
+                "fieldInfos": [
+                  {
+                      "fieldName": "SHAPE",
+                      "label": "SHAPE",
+                      "isEditable": false,
+                      "visible": false
+                  },
+                  {
+                      "fieldName": "name",
+                      "label": "Road or Street Name",
+                      "isEditable": false,
+                      "visible": false,
+                      "stringFieldOption": "textbox"
+                  },
+                  {
+                      "fieldName": "territorial_authority",
+                      "label": "Territorial Authority",
+                      "isEditable": false,
+                      "visible": true,
+                      "stringFieldOption": "textbox"
+                  },
+                  {
+                      "fieldName": "other_names",
+                      "label": "Other Names",
+                      "isEditable": false,
+                      "visible": false,
+                      "stringFieldOption": "textbox"
+                  },
+                  {
+                      "fieldName": "OBJECTID",
+                      "label": "OBJECTID",
+                      "isEditable": false,
+                      "visible": false,
+                      "format": {
+                          "places": 0,
+                          "digitSeparator": true
+                      }
+                  }
+                ],
+                "mediaInfos": [
+
+                ],
+                "showAttachments": true,
+                "title": "Road or Street Name: {name}",
+                "description": null
+            }
+        },
         "VAL": {
             "url": "http://gis.ecan.govt.nz/arcgis/rest/services/Public/Region_Base/MapServer/6",
             "expression": "Valuation_No = '{0}'",
@@ -173,120 +229,172 @@ define({
                 "label": "Legal Description: "
             },
             "infoTemplate": {
-                "description": null,
                 "fieldInfos": [
-                    {
-                        "fieldName": "Appellation",
-                        "isEditable": false,
-                        "label": "Appellation",
-                        "stringFieldOption": "textbox",
-                        "tooltip": "",
-                        "visible": false
-                    },
-                    {
-                        "fieldName": "Valuation_No",
-                        "isEditable": false,
-                        "label": "Valuation No",
-                        "stringFieldOption": "textbox",
-                        "tooltip": "",
-                        "visible": true
-                    },
-                    {
-                        "fieldName": "Titles",
-                        "isEditable": false,
-                        "label": "Titles",
-                        "stringFieldOption": "textbox",
-                        "tooltip": "",
-                        "visible": true
-                    },
-                    {
-                        "fieldName": "Link",
-                        "isEditable": false,
-                        "label": "Rating Info",
-                        "stringFieldOption": "textbox",
-                        "tooltip": "",
-                        "visible": true
-                    },
-                    {
-                        "fieldName": "Land_District",
-                        "isEditable": false,
-                        "label": "Land District",
-                        "stringFieldOption": "textbox",
-                        "tooltip": "",
-                        "visible": true
-                    },
-                    {
-                        "fieldName": "Territorial_Authority",
-                        "isEditable": false,
-                        "label": "Territorial Authority",
-                        "stringFieldOption": "textbox",
-                        "tooltip": "",
-                        "visible": true
-                    },
-                    {
-                        "fieldName": "Survey_Area",
-                        "format": { "places": 0, "digitSeparator": true },
-                        "isEditable": false,
-                        "label": "Survey Area (sq m)",
-                        "stringFieldOption": "textbox",
-                        "tooltip": "",
-                        "visible": true
-                    },
-                    {
-                        "fieldName": "Affected_Surveys",
-                        "isEditable": false,
-                        "label": "Affected Surveys",
-                        "stringFieldOption": "textbox",
-                        "tooltip": "",
-                        "visible": true
-                    },
-                    {
-                        "fieldName": "Calc_Area",
-                        "format": { "places": 0, "digitSeparator": true },
-                        "isEditable": false,
-                        "label": "Calculated Area (sq m)",
-                        "stringFieldOption": "textbox",
-                        "tooltip": "",
-                        "visible": true
-                    },
-                    {
-                        "fieldName": "Parcel_Intent",
-                        "isEditable": false,
-                        "label": "Parcel Intent",
-                        "stringFieldOption": "textbox",
-                        "tooltip": "",
-                        "visible": true
-                    },
-                    {
-                        "fieldName": "Topology_Type",
-                        "isEditable": false,
-                        "label": "Topology Type",
-                        "stringFieldOption": "textbox",
-                        "tooltip": "",
-                        "visible": true
-                    },
-                    {
-                        "fieldName": "Statutory_Actions",
-                        "isEditable": false,
-                        "label": "Statutory Actions",
-                        "stringFieldOption": "textbox",
-                        "tooltip": "",
-                        "visible": true
-                    },
-                    {
-                        "fieldName": "PAR_ID",
-                        "isEditable": false,
-                        "label": "PAR ID",
-                        "stringFieldOption": "textbox",
-                        "tooltip": "",
-                        "visible": true
-                    }
+                  {
+                      "fieldName": "SHAPE",
+                      "label": "SHAPE",
+                      "isEditable": false,
+                      "visible": false
+                  },
+                  {
+                      "fieldName": "Appellation",
+                      "label": "Appellation",
+                      "isEditable": false,
+                      "visible": true,
+                      "stringFieldOption": "textbox"
+                  },
+                  {
+                      "fieldName": "Titles",
+                      "label": "Titles",
+                      "isEditable": false,
+                      "visible": false,
+                      "stringFieldOption": "textbox"
+                  },
+                  {
+                      "fieldName": "Land_District",
+                      "label": "Land_District",
+                      "isEditable": false,
+                      "visible": false,
+                      "stringFieldOption": "textbox"
+                  },
+                  {
+                      "fieldName": "Valuation_No",
+                      "label": "Valuation Number",
+                      "isEditable": false,
+                      "visible": true,
+                      "stringFieldOption": "textbox"
+                  },
+                  {
+                      "fieldName": "TA_Property_ID",
+                      "label": "TA_Property_ID",
+                      "isEditable": false,
+                      "visible": false,
+                      "stringFieldOption": "textbox"
+                  },
+                  {
+                      "fieldName": "Roll_No",
+                      "label": "Roll_No",
+                      "isEditable": false,
+                      "visible": false,
+                      "stringFieldOption": "textbox"
+                  },
+                  {
+                      "fieldName": "Assessment",
+                      "label": "Assessment",
+                      "isEditable": false,
+                      "visible": false,
+                      "stringFieldOption": "textbox"
+                  },
+                  {
+                      "fieldName": "Suffix",
+                      "label": "Suffix",
+                      "isEditable": false,
+                      "visible": false,
+                      "stringFieldOption": "textbox"
+                  },
+                  {
+                      "fieldName": "Valuation_Legal_Descriptions",
+                      "label": "Valuation Legal Descriptions",
+                      "isEditable": false,
+                      "visible": false,
+                      "stringFieldOption": "textbox"
+                  },
+                  {
+                      "fieldName": "TA_Code",
+                      "label": "TA_Code",
+                      "isEditable": false,
+                      "visible": false,
+                      "stringFieldOption": "textbox"
+                  },
+                  {
+                      "fieldName": "Territorial_Authority",
+                      "label": "Territorial Authority",
+                      "isEditable": false,
+                      "visible": true,
+                      "stringFieldOption": "textbox"
+                  },
+                  {
+                      "fieldName": "Affected_Surveys",
+                      "label": "Affected_Surveys",
+                      "isEditable": false,
+                      "visible": false,
+                      "stringFieldOption": "textbox"
+                  },
+                  {
+                      "fieldName": "Parcel_Intent",
+                      "label": "Parcel_Intent",
+                      "isEditable": false,
+                      "visible": false,
+                      "stringFieldOption": "textbox"
+                  },
+                  {
+                      "fieldName": "Topology_Type",
+                      "label": "Topology_Type",
+                      "isEditable": false,
+                      "visible": false,
+                      "stringFieldOption": "textbox"
+                  },
+                  {
+                      "fieldName": "Statutory_Actions",
+                      "label": "Statutory_Actions",
+                      "isEditable": false,
+                      "visible": false,
+                      "stringFieldOption": "textbox"
+                  },
+                  {
+                      "fieldName": "Survey_Area",
+                      "label": "Survey_Area",
+                      "isEditable": false,
+                      "visible": false,
+                      "format": {
+                          "places": 2,
+                          "digitSeparator": true
+                      }
+                  },
+                  {
+                      "fieldName": "Calc_Area",
+                      "label": "Calc_Area",
+                      "isEditable": false,
+                      "visible": false,
+                      "format": {
+                          "places": 2,
+                          "digitSeparator": true
+                      }
+                  },
+                  {
+                      "fieldName": "Link",
+                      "label": "Link",
+                      "isEditable": false,
+                      "visible": true,
+                      "stringFieldOption": "textbox"
+                  },
+                  {
+                      "fieldName": "PAR_ID",
+                      "label": "PAR_ID",
+                      "isEditable": false,
+                      "visible": false,
+                      "format": {
+                          "places": 0,
+                          "digitSeparator": true
+                      }
+                  },
+                  {
+                      "fieldName": "OBJECTID",
+                      "label": "OBJECTID",
+                      "isEditable": false,
+                      "visible": false,
+                      "format": {
+                          "places": 0,
+                          "digitSeparator": true
+                      }
+                  }
                 ],
                 "mediaInfos": [
 
                 ],
                 "showAttachments": true,
-                "title": "Legal Description: {Appellation}"
+                "title": "Land Parcel Title: {Titles}",
+                "description": null
             }
         },
         "PAR": {
@@ -298,120 +406,172 @@ define({
                 "label": "Legal Description: "
             },
             "infoTemplate": {
-                "description": null,
                 "fieldInfos": [
-                    {
-                        "fieldName": "Appellation",
-                        "isEditable": false,
-                        "label": "Appellation",
-                        "stringFieldOption": "textbox",
-                        "tooltip": "",
-                        "visible": false
-                    },
-                    {
-                        "fieldName": "Valuation_No",
-                        "isEditable": false,
-                        "label": "Valuation No",
-                        "stringFieldOption": "textbox",
-                        "tooltip": "",
-                        "visible": true
-                    },
-                    {
-                        "fieldName": "Titles",
-                        "isEditable": false,
-                        "label": "Titles",
-                        "stringFieldOption": "textbox",
-                        "tooltip": "",
-                        "visible": true
-                    },
-                    {
-                        "fieldName": "Link",
-                        "isEditable": false,
-                        "label": "Rating Info",
-                        "stringFieldOption": "textbox",
-                        "tooltip": "",
-                        "visible": true
-                    },
-                    {
-                        "fieldName": "Land_District",
-                        "isEditable": false,
-                        "label": "Land District",
-                        "stringFieldOption": "textbox",
-                        "tooltip": "",
-                        "visible": true
-                    },
-                    {
-                        "fieldName": "Territorial_Authority",
-                        "isEditable": false,
-                        "label": "Territorial Authority",
-                        "stringFieldOption": "textbox",
-                        "tooltip": "",
-                        "visible": true
-                    },
-                    {
-                        "fieldName": "Survey_Area",
-                        "format": { "places": 0, "digitSeparator": true },
-                        "isEditable": false,
-                        "label": "Survey Area (sq m)",
-                        "stringFieldOption": "textbox",
-                        "tooltip": "",
-                        "visible": true
-                    },
-                    {
-                        "fieldName": "Affected_Surveys",
-                        "isEditable": false,
-                        "label": "Affected Surveys",
-                        "stringFieldOption": "textbox",
-                        "tooltip": "",
-                        "visible": true
-                    },
-                    {
-                        "fieldName": "Calc_Area",
-                        "format": { "places": 0, "digitSeparator": true },
-                        "isEditable": false,
-                        "label": "Calculated Area (sq m)",
-                        "stringFieldOption": "textbox",
-                        "tooltip": "",
-                        "visible": true
-                    },
-                    {
-                        "fieldName": "Parcel_Intent",
-                        "isEditable": false,
-                        "label": "Parcel Intent",
-                        "stringFieldOption": "textbox",
-                        "tooltip": "",
-                        "visible": true
-                    },
-                    {
-                        "fieldName": "Topology_Type",
-                        "isEditable": false,
-                        "label": "Topology Type",
-                        "stringFieldOption": "textbox",
-                        "tooltip": "",
-                        "visible": true
-                    },
-                    {
-                        "fieldName": "Statutory_Actions",
-                        "isEditable": false,
-                        "label": "Statutory Actions",
-                        "stringFieldOption": "textbox",
-                        "tooltip": "",
-                        "visible": true
-                    },
-                    {
-                        "fieldName": "PAR_ID",
-                        "isEditable": false,
-                        "label": "PAR ID",
-                        "stringFieldOption": "textbox",
-                        "tooltip": "",
-                        "visible": true
-                    }
+                  {
+                      "fieldName": "SHAPE",
+                      "label": "SHAPE",
+                      "isEditable": false,
+                      "visible": false
+                  },
+                  {
+                      "fieldName": "Appellation",
+                      "label": "Appellation",
+                      "isEditable": false,
+                      "visible": true,
+                      "stringFieldOption": "textbox"
+                  },
+                  {
+                      "fieldName": "Titles",
+                      "label": "Titles",
+                      "isEditable": false,
+                      "visible": false,
+                      "stringFieldOption": "textbox"
+                  },
+                  {
+                      "fieldName": "Land_District",
+                      "label": "Land_District",
+                      "isEditable": false,
+                      "visible": false,
+                      "stringFieldOption": "textbox"
+                  },
+                  {
+                      "fieldName": "Valuation_No",
+                      "label": "Valuation Number",
+                      "isEditable": false,
+                      "visible": true,
+                      "stringFieldOption": "textbox"
+                  },
+                  {
+                      "fieldName": "TA_Property_ID",
+                      "label": "TA_Property_ID",
+                      "isEditable": false,
+                      "visible": false,
+                      "stringFieldOption": "textbox"
+                  },
+                  {
+                      "fieldName": "Roll_No",
+                      "label": "Roll_No",
+                      "isEditable": false,
+                      "visible": false,
+                      "stringFieldOption": "textbox"
+                  },
+                  {
+                      "fieldName": "Assessment",
+                      "label": "Assessment",
+                      "isEditable": false,
+                      "visible": false,
+                      "stringFieldOption": "textbox"
+                  },
+                  {
+                      "fieldName": "Suffix",
+                      "label": "Suffix",
+                      "isEditable": false,
+                      "visible": false,
+                      "stringFieldOption": "textbox"
+                  },
+                  {
+                      "fieldName": "Valuation_Legal_Descriptions",
+                      "label": "Valuation Legal Descriptions",
+                      "isEditable": false,
+                      "visible": false,
+                      "stringFieldOption": "textbox"
+                  },
+                  {
+                      "fieldName": "TA_Code",
+                      "label": "TA_Code",
+                      "isEditable": false,
+                      "visible": false,
+                      "stringFieldOption": "textbox"
+                  },
+                  {
+                      "fieldName": "Territorial_Authority",
+                      "label": "Territorial Authority",
+                      "isEditable": false,
+                      "visible": true,
+                      "stringFieldOption": "textbox"
+                  },
+                  {
+                      "fieldName": "Affected_Surveys",
+                      "label": "Affected_Surveys",
+                      "isEditable": false,
+                      "visible": false,
+                      "stringFieldOption": "textbox"
+                  },
+                  {
+                      "fieldName": "Parcel_Intent",
+                      "label": "Parcel_Intent",
+                      "isEditable": false,
+                      "visible": false,
+                      "stringFieldOption": "textbox"
+                  },
+                  {
+                      "fieldName": "Topology_Type",
+                      "label": "Topology_Type",
+                      "isEditable": false,
+                      "visible": false,
+                      "stringFieldOption": "textbox"
+                  },
+                  {
+                      "fieldName": "Statutory_Actions",
+                      "label": "Statutory_Actions",
+                      "isEditable": false,
+                      "visible": false,
+                      "stringFieldOption": "textbox"
+                  },
+                  {
+                      "fieldName": "Survey_Area",
+                      "label": "Survey_Area",
+                      "isEditable": false,
+                      "visible": false,
+                      "format": {
+                          "places": 2,
+                          "digitSeparator": true
+                      }
+                  },
+                  {
+                      "fieldName": "Calc_Area",
+                      "label": "Calc_Area",
+                      "isEditable": false,
+                      "visible": false,
+                      "format": {
+                          "places": 2,
+                          "digitSeparator": true
+                      }
+                  },
+                  {
+                      "fieldName": "Link",
+                      "label": "Link",
+                      "isEditable": false,
+                      "visible": true,
+                      "stringFieldOption": "textbox"
+                  },
+                  {
+                      "fieldName": "PAR_ID",
+                      "label": "PAR_ID",
+                      "isEditable": false,
+                      "visible": false,
+                      "format": {
+                          "places": 0,
+                          "digitSeparator": true
+                      }
+                  },
+                  {
+                      "fieldName": "OBJECTID",
+                      "label": "OBJECTID",
+                      "isEditable": false,
+                      "visible": false,
+                      "format": {
+                          "places": 0,
+                          "digitSeparator": true
+                      }
+                  }
                 ],
                 "mediaInfos": [
 
                 ],
                 "showAttachments": true,
-                "title": "Legal Description: {Appellation}"
+                "title": "Land Parcel Title: {Titles}",
+                "description": null
             }
         }
     },
