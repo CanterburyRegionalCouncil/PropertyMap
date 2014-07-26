@@ -1139,6 +1139,7 @@ function (
 
                 // Create a new search results layer
                 this._searchLayer = new FeatureLayer(layerInfo.url, {
+                    "id": "Highlighted Features",
                     "mode": FeatureLayer.MODE_ONDEMAND,
                     "infoTemplate": new PopupTemplate(layerInfo.infoTemplate),
                     "outFields": outFields

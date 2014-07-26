@@ -11,7 +11,7 @@
     "dojo/on",
     "dojo/query",
     "dojo/i18n!application/nls/SuggestionSearch",
-    
+
     // load template
     "dojo/text!application/dijit/templates/SuggestionSearch.html",
     "dojo/uacss",
@@ -622,7 +622,7 @@ function (
                     },
                     handleAs: "json",
                     callbackParamName: 'callback',
-                    load: lang.hitch(this, function(response){ this._handleSuggestionInfo(response, def, e); }),
+                    load: lang.hitch(this, function (response) { this._handleSuggestionInfo(response, def, e); }),
                     error: lang.hitch(this, function (err) { this._handleSuggestionError(err, def, e); })
                 });
             } else {
@@ -1215,7 +1215,7 @@ function (
                     geometry.setSpatialReference(sR);
                 }
             }
-            // address candidates geocoder
+                // address candidates geocoder
             else if (e.hasOwnProperty('location')) {
                 // create point
                 var pt = new Point(e.location.x, e.location.y, sR);
@@ -1272,13 +1272,13 @@ function (
                 newResult.name = e.name;
             }
 
-            // set name
+                // set name
             else if (e.hasOwnProperty('address') && typeof e.address === 'string') {
                 newResult.name = e.address;
             } else if (e.hasOwnProperty('address') && typeof e.address === 'object' && e.address.hasOwnProperty('Address')) {
                 newResult.name = e.address.Address;
-            //} else if (e.hasOwnProperty('label')) {
-            //    newResult.name = e.label;
+                //} else if (e.hasOwnProperty('label')) {
+                //    newResult.name = e.label;
             } else if (newResult.feature && newResult.feature.geometry) {
                 newResult.name = newResult.feature.geometry.x + ',' + newResult.feature.geometry.y;
             } else {

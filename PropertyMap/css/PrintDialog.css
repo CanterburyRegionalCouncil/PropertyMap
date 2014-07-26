@@ -1,70 +1,70 @@
 .calcite .icon-container {
-    margin: 10px 0 20px;
+	margin: 10px 0 20px;
 }
 .calcite .map-size-label {
-    float: left;
-    font-size: 15px;
-    margin: 0 5px 0 0;
+	float: left;
+	font-size: 15px;
+	margin: 0 5px 0 0;
 }
 .esriRTL .calcite .map-size-label {
-    float: right;
-    margin: 0 0 0 5px;
+	float: right;
+	margin: 0 0 0 5px;
 }
 .calcite .print-dialog-icon {
-    font-size: 32px;
-    line-height: 32px;
-    float: left;
-    color: #007ac2;
-    cursor: pointer;
-    margin: 0 10px 0 0;
+	font-size: 32px;
+	line-height: 32px;
+	float: left;
+	color: #007ac2;
+	cursor: pointer;
+	margin: 0 10px 0 0;
 }
 .esriRTL .calcite .print-dialog-icon {
-    float: right;
-    margin: 0 0 0 10px;
+	float: right;
+	margin: 0 0 0 10px;
 }
 .calcite .print-dialog-icon:hover {
-    color: #97cbec;
+	color: #97cbec;
 }
 .calcite .print-dialog-icon:active {
-    color: #555;
+	color: #555;
 }
 .calcite .icon-clear {
-    clear: both;
+	clear: both;
 }
 .calcite .print-dialog-subheader {
-    font-size: 19px;
-    margin: 0 0 5px;
+	font-size: 19px;
+	margin: 0 0 5px;
 }
 
 .calcite .print-form-container {
-    margin-bottom: -1px;
-    width: 100%;
+	margin-bottom: -1px;
+	width: 100%;
 }
 
 .calcite .print-results-container {
-    width: 100%;
-    margin-top: 10px;
+	width: 100%;
+	margin-top: 10px;
 }
 
 .calcite .dialog-content .print-dialog-selectinput {
-    width: 50% !important;
-    min-width: 30%;
-    max-width: 90%;
-    height: 25px;
-    font-size: 14px;
-    color: #777;
-    border: 1px solid #dcdcdc;
-    margin: 0 5px 5px 0;
+	width: 50% !important;
+	min-width: 30%;
+	max-width: 90%;
+	height: 25px;
+	font-size: 12px;
+	color: #777;
+	border: 1px solid #dcdcdc;
+	margin: 0 5px 5px 0;
 }
 .esriRTL .calcite .dialog-content .print-dialog-selectinput {
-    margin: 0 0 5px 5px;
+	margin: 0 0 5px 5px;
 }
 
 .calcite .print-dialog-dropdown {
-    float: left;
+	float: left;
 }
 .esriRTL .calcite .print-dialog-dropdown {
-    float: right;
+	float: right;
 }
 
 .calcite .print-form-container .dijitSelect{
@@ -76,57 +76,107 @@
   width: 17px;
 }
 
+.calcite .print-buttons-actionbar .dijitButtonNode 
+{
+	font-size: 12px;
+	font-weight: normal;
+}
+
 .dijitCheckBoxInput {
-    opacity: 1;
+	opacity: 1;
 }
 .dj_ie .dijitCheckBoxInput {
-    filter: alpha(opacity=100);
+	filter: alpha(opacity=100);
 }
 
 .calcite .printResult {
-    /*border: 1px solid #CCCCCC;*/
-    height: 28px;
-    margin-bottom: -1px;
-    width: 100%;
+	/*border: 1px solid #CCCCCC;*/
+	height: 28px;
+	margin-bottom: -1px;
+	width: 100%;
 }
 
 .calcite .printResult .printResultTable {
-    width: 100%;
+	width: 100%;
 }
 
 .calcite .printResult .bold {
-    font-weight: bold;
+	font-weight: bold;
 }
 
 .calcite .printResultError {
-    font-weight: bold;
-    color: red;
+	font-weight: bold;
+	color: red;
 }
 
 .calcite .printResultHover table:hover {
-    background-color: #D4E7F8;
-    cursor: pointer;
+	background-color: #D4E7F8;
+	cursor: pointer;
 }
 
 .calcite .resultsContainer {
-    width: 100%;
-    margin-top: 10px;
+	width: 100%;
+	margin-top: 10px;
 }
 
-.calcite .printIcon {
-    background-image: url(../images/print.png);
-    width: 16px;
-    height: 16px;
+
+
+
+.calcite .dijitProgressBar {
+	margin:2px 0px 2px 0px;
+}
+.calcite .dijitProgressBarEmpty{
+	
+	background:#fff url("../images/progressBarEmpty.png") repeat-x center center;
+	border-color: #8ba0bd;
+}
+.calcite .dijitProgressBarTile{
+	
+	background:#f0f0f0 url("../images/progressBarFull.png") repeat-x center center;
+}
+.calcite .dijitProgressBarFull {
+	border-right:1px solid #8ba0bd;
+}
+.calcite .dijitProgressBarLabel {
+	
+	color:#293a4b;
+}
+.calcite .dijitProgressBarIndeterminate .dijitProgressBarTile {
+	
+	background:#cad2de url("../images/progressBarAnim.gif") repeat-x center center;
+}
+
+/*Print Icons*/
+.print-icon {
+	width: 16px;
+	height: 16px;
+	background-size: 16px Auto;
+	background-repeat: no-repeat;
+	padding-right: 3px;
+}
+
+.print-icon.print-icon-pdf {
+	background-image: url(../images/pdf.png);
+}
+
+.print-icon.print-icon-image {
+	background-image: url(../images/image.png);
+}
+
+.calcite .print-icon.printIcon {
+	background-image: url(../images/print.png);
+	/*width: 16px;
+	height: 16px;*/
 }
 
 .calcite .clearIcon {
-    background-image: url(../images/clear.png);
-    width: 16px;
-    height: 16px;
+	background-image: url(../images/clear.png);
+	/*width: 16px;
+	height: 16px;*/
 }
 
-.calcite .settingsIcon {
-    background-image: url(../images/settings.png);
-    width: 16px;
-    height: 16px;
+.calcite .print-icon.settingsIcon {
+	background-image: url(../images/settings.png);
+	/*width: 16px;
+	height: 16px;*/
 }

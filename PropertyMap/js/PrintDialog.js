@@ -98,8 +98,10 @@ define([
             },
             count: 1,
             results: [],
-            pdfIcon: require.toUrl("../images/pdf.png"),
-            imageIcon: require.toUrl("../images/image.png"),
+            pdfIcon: "print-icon-pdf",
+            imageIcon: "print-icon-image",
+            //pdfIcon: require.toUrl("../images/pdf.png"),
+            //imageIcon: require.toUrl("../images/image.png"),
 
             // lifecycle: 1
             constructor: function (options, srcRefNode) {
@@ -142,6 +144,8 @@ define([
                     printDialogExtent: "print-dialog-extent",
                     printDialogFormContainer: "print-form-container",
                     printDialogResultsContainer: "print-results-container",
+                    printDialogButtonsActionBar: "print-buttons-actionbar",
+                    printDialogIcon: "print-icon",
                     mapSizeContainer: "map-size-container",
                     embedMapSizeClear: "embed-map-size-clear",
                     iconClear: "icon-clear"
@@ -415,9 +419,6 @@ define([
 
                     var frmt = dom.byId('format').value;
                     var lyout = dom.byId('layout').value;
-                    //template.format = form.format;
-                    //template.layout = form.layout;
-
                     template.format = frmt;
                     template.layout = lyout;
 
@@ -466,12 +467,10 @@ define([
 
                     var result = new printResultDijit({
                         count: this.count.toString(),
-                        icon: (form.format === "PDF") ? this.pdfIcon : this.imageIcon,
+                        icon: (frmt === "PDF") ? this.pdfIcon : this.imageIcon,
                         docName: form.title,
-                        //title: form.format + ', ' + form.layout,
                         title: frmt + ', ' + lyout,
-                        fileHandle: fileHandel//,
-                        //nls: _i18n //this.nls
+                        fileHandle: fileHandel
                     }).placeAt(this.printResultsNode, 'last');
                     result.startup();
                     domStyle.set(this.clearActionBarNode, 'display', 'block');
@@ -508,6 +507,11 @@ define([
                 // widget node
                 this.domNode = srcRefNode;
                 this._i18n = i18n;
+
+                //css
+                this.css = {
+                    icon: "print-icon"
+                };
             },
             postCreate: function () {
                 this.inherited(arguments);

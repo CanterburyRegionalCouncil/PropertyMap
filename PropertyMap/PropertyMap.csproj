@@ -80,6 +80,9 @@
     <Content Include="images\image.png" />
     <Content Include="images\pdf.png" />
     <Content Include="images\print.png" />
+    <Content Include="images\progressBarAnim.gif" />
+    <Content Include="images\progressBarEmpty.png" />
+    <Content Include="images\progressBarFull.png" />
     <Content Include="images\settings.png" />
     <Content Include="js\dijit\templates\BasemapDialog.html" />
     <Content Include="js\dijit\templates\Logo.html" />

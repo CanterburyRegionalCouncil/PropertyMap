@@ -5,7 +5,8 @@
                 <span class="bold">${count}.</span>
             </td>
             <td width="30px">
-                <img src="${icon}">
+                <div class="${css.icon} ${icon}"></div>
+                <!--<img src="${icon}">-->
             </td>
             <td data-dojo-attach-point="nameNode">
                 <div data-dojo-type="dijit.ProgressBar" data-dojo-props="value:Infinity,label:'${_i18n.widgets.PrintDialog.creatingPrint}'">

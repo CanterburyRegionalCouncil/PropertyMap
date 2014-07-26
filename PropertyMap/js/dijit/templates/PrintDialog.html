@@ -37,8 +37,8 @@
                 </div>
             </div>
 
-            <div class="buttonActionBar">
-                <div data-dojo-type="dijit/form/DropDownButton" data-dojo-props="iconClass:'settingsIcon',showLabel:true">
+            <div class="${css.printDialogButtonsActionBar}">
+                <div data-dojo-type="dijit/form/DropDownButton" data-dojo-props="iconClass:'${css.printDialogIcon} settingsIcon',showLabel:true">
                     <span>
                         ${_i18n.widgets.PrintDialog.settings}
                     </span>
@@ -145,7 +145,7 @@
                         </div>
                     </div>
                 </div>
-                <div data-dojo-type="dijit/form/Button" data-dojo-props="busyLabel:'printing',iconClass:'printIcon'"
+                <div data-dojo-type="dijit/form/Button" data-dojo-props="busyLabel:'printing',iconClass:'${css.printDialogIcon} printIcon'"
                      data-dojo-attach-event="onClick:print" data-dojo-attach-point="printButtonDijit">
                     ${_i18n.widgets.PrintDialog.print}
                 </div>
@@ -153,7 +153,7 @@
 
             <div data-dojo-attach-point="printResultsNode" class="resultsContainer">
             </div>
-            <div data-dojo-attach-point="clearActionBarNode" class="buttonActionBar"
+            <div data-dojo-attach-point="clearActionBarNode" class="${css.printDialogButtonsActionBar}"
                  style="display:none;padding:0;">
                 <div data-dojo-type="dijit/form/Button" data-dojo-props="iconClass:'clearIcon'"
                      data-dojo-attach-event="onClick:clearResults">
