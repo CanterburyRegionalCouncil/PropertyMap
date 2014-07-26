@@ -586,7 +586,8 @@ function (
                     defaultTitle: this.config.helperServices.printTask.defaultTitle,
                     defaultFormat: this.config.helperServices.printTask.defaultFormat,
                     defaultLayout: this.config.helperServices.printTask.defaultLayout,
-                    mapDefinition: itemInfo
+                    mapDefinition: itemInfo,
+                    layerInfos: this.layerInfos
                 }, 'PrintDialog');
                 this._PrintDialog.startup();
             }

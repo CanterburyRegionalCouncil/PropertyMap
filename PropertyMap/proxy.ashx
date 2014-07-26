@@ -28,6 +28,10 @@ public class proxy : IHttpHandler {
 
         HttpResponse response = context.Response;
 
+        context.Response.Clear(); 
+        context.Response.Cache.SetCacheability(HttpCacheability.Public);
+        context.Response.Cache.SetExpires(DateTime.MinValue);
+        
         // Get the URL requested by the client (take the entire querystring at once
         //  to handle the case of the URL itself containing querystring parameters)
         string uri = context.Request.Url.Query.Substring(1);
@@ -278,6 +282,9 @@ public class proxy : IHttpHandler {
                         {
                             using (StreamReader sr = new StreamReader(byteStream))
                             {
+                                // Tell client not to cache the image since it's dynamic
+                                response.CacheControl = "no-cache";
+
                                 string strResponse = sr.ReadToEnd();
                                 response.Write(strResponse);
                             }

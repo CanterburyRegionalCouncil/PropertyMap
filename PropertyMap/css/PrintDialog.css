@@ -104,6 +104,11 @@
 	font-weight: bold;
 }
 
+.calcite .printResult .printDatestamp {
+	font-style: italic;
+	font-size: 0.7em;
+}
+
 .calcite .printResultError {
 	font-weight: bold;
 	color: red;

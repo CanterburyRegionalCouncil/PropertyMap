@@ -39,7 +39,6 @@ define([
     "dijit/form/DropDownButton",
     "dijit/TooltipDialog",
     "dijit/form/RadioButton",
-    "dojo/store/Memory",
     "dojo/aspect"
 ],
     function (
@@ -73,7 +72,6 @@ define([
         DropDownButton,
         TooltipDialog,
         RadioButton,
-        Memory,
         aspect
 ) {
         var Widget = declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, Evented], {
@@ -94,15 +92,13 @@ define([
                 summary: '',
                 hashtags: '',
                 isAsync: true,
-                mapDefinition : null
+                mapDefinition: null,
+                layerInfos: null
             },
             count: 1,
             results: [],
             pdfIcon: "print-icon-pdf",
             imageIcon: "print-icon-image",
-            //pdfIcon: require.toUrl("../images/pdf.png"),
-            //imageIcon: require.toUrl("../images/image.png"),
-
             // lifecycle: 1
             constructor: function (options, srcRefNode) {
                 // mix in settings and defaults
@@ -122,6 +118,7 @@ define([
                 this.set("defaultMapTitle", defaults.defaultTitle);
                 this.set("isAsync", defaults.isAsync);
                 this.set("mapDefinition", defaults.mapDefinition);
+                this.set("layerInfos", defaults.layerInfos);
 
                 // listeners
                 this.watch("theme", this._updateThemeWatch);
@@ -156,6 +153,10 @@ define([
                 this.inherited(arguments);
 
                 this.printTask = new PrintTask(this.printTaskURL, { 'async': this.isAsync });
+
+                this.printTask.printGp.setUpdateDelay(2000);
+
+
                 this.printparams = new PrintParameters();
                 this.printparams.map = this.map;
                 this.printparams.outSpatialReference = this.map.spatialReference;
@@ -173,12 +174,13 @@ define([
                 aspect.after(this.printTask, '_getPrintDefinition', lang.hitch(this, 'printDefInspector'), false);
 
                 // add proxy rule
-                //var printRuleURL = this.printTaskURL.replace("http://", "").replace("/GPServer/Export%20Web%20Map", "");
-                //urlUtils.addProxyRule({
-                //    urlPrefix: printRuleURL,
-                //    proxyUrl: esriConfig.defaults.io.proxyUrl
-                //});
+                var printRuleURL = this.printTaskURL.replace("http://", "").replace("/GPServer/Export%20Web%20Map", "");
+                urlUtils.addProxyRule({
+                    urlPrefix: printRuleURL,
+                    proxyUrl: esriConfig.defaults.io.proxyUrl
+                });
 
+                // Hook up toggle button
                 this.own(on(this._buttonNode, a11yclick, lang.hitch(this, this.toggle)));
             },
 
@@ -296,11 +298,7 @@ define([
             open: function () {
                 domClass.add(this._buttonNode, this.css.buttonSelected);
                 this.get("dialog").show();
-                //if (this.get("useExtent")) {
-                //    this._updateUrl();
-                //}
                 this.emit("open", {});
-                //this._shareLink();
             },
             close: function () {
                 this.get("dialog").hide();
@@ -337,30 +335,9 @@ define([
                 }
                 this._events = [];
             },
-            _setSizeOptions: function () {
-                // clear select menu
-                this._comboBoxNode.innerHTML = '';
-                // if embed sizes exist
-                if (this.get("embedSizes") && this.get("embedSizes").length) {
-                    // map sizes
-                    for (var i = 0; i < this.get("embedSizes").length; i++) {
-                        if (i === 0) {
-                            this.set("embedWidth", this.get("embedSizes")[i].width);
-                            this.set("embedHeight", this.get("embedSizes")[i].height);
-                        }
-                        var option = domConstruct.create("option", {
-                            value: i,
-                            innerHTML: this.get("embedSizes")[i].width + " x " + this.get("embedSizes")[i].height
-                        });
-                        domConstruct.place(option, this._comboBoxNode, "last");
-                    }
-                }
-            },
             _init: function () {
                 // setup events
                 this._removeEvents();
-                // set sizes for select box
-                //this._setSizeOptions();
                 // dialog
                 if (!this.get("dialog")) {
                     var dialog = new Dialog({
@@ -428,40 +405,63 @@ define([
 
                     // Populate the legend options
                     var layers = this.map.getLayersVisibleAtScale(this.map.getScale());
-                    var legendLayers = [];
+                    var legendLayers = [], useLayerInfos = true;
                     var tiledLayers = [];
 
+                    if (this.layerInfos != null) {
+                        array.forEach(this.layerInfos, function (info) {
+                            var legendItem = new LegendLayer();
+                            legendItem.layerId = info.layer.id;
+
+                            if (info.layer.visibleLayers)
+                                legendItem.subLayerIds = info.layer.visibleLayers;
+
+                            legendLayers.push(legendItem);
+                        });
+
+                        // Check for serach results layer - add to the map
+                        var hlay = this.map.getLayer("Highlighted Features");
+                        if (hlay) {
+                            var hlItem = new LegendLayer();
+                            hlItem.layerId = "Highlighted Features";
+                            legendLayers.push(hlItem);
+                        }
+                    }
+
                     array.forEach(layers, function (layer) {
-                        var legendItem = new LegendLayer();
-                        legendItem.layerId = layer.id;
-                        if (layer.visibleLayers)
-                            legendItem.subLayerIds = layer.visibleLayers;
+                        console.log("Print Layer: " + layer.id);
+
+                        if (!useLayerInfos) {
+                            var legendItem = new LegendLayer();
+                            legendItem.layerId = layer.id;
+                            if (layer.visibleLayers)
+                                legendItem.subLayerIds = layer.visibleLayers;
+                            legendLayers.push(legendItem);
+                        }
 
                         if (layer.tileInfo) {
                             var tInfo = {
                                 'id': layer.id,
-                                'url': layer.url,
-                                'title': layer.title
+                                'url': layer.url//,
+                                //'title': layer.title
                             };
-                            
                             tiledLayers.push(tInfo);
                         }
 
-                        legendLayers.push(legendItem);
                     });
 
                     template.layoutOptions = {
                         authorText: form.author,
                         copyrightText: form.copyright,
-                        legendLayers: (this.layoutForm.legend.length > 0 && this.layoutForm.legend[0]) ? null : legendLayers,
-                        titleText: form.title,
-                        extraParameters: {
-                            'tiledLayers': tiledLayers
-                        }
+                        legendLayers: (this.layoutForm.legend.length > 0 && this.layoutForm.legend[0]) ? legendLayers : [],
+                        titleText: form.title
                         //scalebarUnit: this.layoutForm.scalebarUnit
                     };
 
                     this.printparams.template = template;
+                    this.printparams.extraParameters = {
+                        'tiledLayers': tiledLayers
+                    };
 
                     var fileHandel = this.printTask.execute(this.printparams);
 
@@ -520,7 +520,9 @@ define([
             _onPrintComplete: function (data) {
                 if (data.url) {
                     this.url = data.url;
-                    this.nameNode.innerHTML = '<span class="bold">' + this.docName + '</span>';
+                    var d = new Date();
+
+                    this.nameNode.innerHTML = "<span class=\"bold\">" + this.docName + "</span>&nbsp<span class=\"printDatestamp\">" + d.toLocaleString() + "</span>";
                     domClass.add(this.resultNode, "printResultHover");
                 } else {
                     this._onPrintError(this._i18n.widgets.PrintDialog.printError);
