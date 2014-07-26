@@ -1075,14 +1075,14 @@ function (
             // Update the tooltip
             this._toggleInExtentTooltip(!inExtent);
         },
+        // Shows/hides the out of visible extent tooltip
         _toggleInExtentTooltip: function (showTooltip) {
             var node = dom.byId("zoomToRecord")
             Tooltip.hide(node);
             if (showTooltip) {
                 Tooltip.show("This feature extends beyond the visible extent of the map", node);
-                on.once(node, mouse.leave, function () {
-                    Tooltip.hide(node);
-                });
+                //hide after 2 seconds
+                setTimeout(lang.hitch(this, function () { Tooltip.hide(node); }), 2000);
             }
         },
         // Zoom to show the extent of the given features
@@ -1172,9 +1172,8 @@ function (
                     // Set the layer alpha
                     layer.opacity = 0.5;
 
-                    var symbol;
-
                     // Set the renderer
+                    var symbol;
                     switch (layer.geometryType) {
                         case "esriGeometryPoint":
                             symbol = new SimpleMarkerSymbol(SimpleMarkerSymbol.STYLE_SQUARE, 14,
