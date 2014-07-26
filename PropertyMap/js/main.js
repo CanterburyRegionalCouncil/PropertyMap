@@ -266,7 +266,7 @@ function (
                 var heading = new ContentPane({
                     region: "top",
                     style: "height: 30px",
-                    content: "<div style=\"display:block; width: 100%;\"><div id=\"pager\" style=\"display:none\" ><a href='javascript:void(0);' id =\"recordprevious\" class=\"nav\" style=\"text-decoration: none;\" title=\"Previous Record\">\<</a>&nbsp;<a href=\"javascript:void(0);\" id=\"recordnext\" class=\"nav\" style=\"text-decoration: none;\" title=\"Next Record\">\></a></div><div id=\"featureCount\" class=\"featureCount\" >Click to select feature(s)</div></div>"
+                    content: "<div style=\"display:block; width: 100%;\"><div id=\"pager\" style=\"display:none\" ><span id =\"recordprevious\" class=\"nav\" style=\"text-decoration: none;\" title=\"Previous Record\">\<</span>&nbsp;<span id=\"recordnext\" class=\"nav\" style=\"text-decoration: none;\" title=\"Next Record\">\></span></div><div id=\"featureCount\" class=\"featureCount\" >Click to select feature(s)</div></div>"
                 });
                 bc.addChild(heading);
 
@@ -281,7 +281,7 @@ function (
                 var footer = new ContentPane({
                     region: "bottom",
                     style: "height: 30px",
-                    content: "<div style=\"display:block; width: 100%;\"><a href='javascript:void(0);' id =\"zoomToRecord\" class=\"nav\" style=\"text-decoration: none;\" title=\"Zoom To Current\">\Zoom To Current</a></div><div id=\"featureTags\" class=\"idFeatureTags\"></div>"
+                    content: "<div style=\"display:block; width: 100%;\"><span id =\"zoomToRecord\" class=\"nav\" title=\"Zoom To Current\">\Zoom To Current</span></div><div id=\"featureTags\" class=\"idFeatureTags\"></div>"
                 });
                 bc.addChild(footer);
 
@@ -326,7 +326,7 @@ function (
             var currentIndex = this.map.infoWindow.selectedIndex;
 
             if (currentIndex == 0 && !domClass.contains(dom.byId("recordprevious"), "disabled")) {
-
+                domClass.add(dom.byId("recordprevious"), "disabled");
             } else if (currentIndex != 0 && domClass.contains(dom.byId("recordprevious"), "disabled")) {
                 domClass.remove(dom.byId("recordprevious"), "disabled");
             }
@@ -478,6 +478,8 @@ function (
 
                     //enable navigation if more than one feature is selected 
                     popup.features.length > 1 ? domUtils.show(dom.byId("pager")) : domUtils.hide(dom.byId("pager"));
+
+                    // update the next/previous button stats
 
                     ////construct feature tags
                     //var html = "";
