@@ -429,7 +429,7 @@ define([
                     }
 
                     array.forEach(layers, function (layer) {
-                        console.log("Print Layer: " + layer.id);
+                        //console.log("Print Layer: " + layer.id);
 
                         if (!useLayerInfos) {
                             var legendItem = new LegendLayer();

@@ -234,6 +234,7 @@ function (
                         af += (r.attributeField2 ? '/' + r.attributeField2 : '') + (r.attributeField3 ? '/' + r.attributeField3 : '');
                         var anode = domConstruct.create('div', {}, this.containerNode);
                         domStyle.set(anode, 'paddingLeft', '' + this.rootLayerTOC.tocWidget.indentSize * (this.rootLayerTOC._currentIndent + 2) + 'px');
+                        domClass.add(anode, 'agsjsTOCGroupTitle');
                         anode.innerHTML = af;
                         this._createChildrenNodes(legs, 'legend');
                     } else {

@@ -5,7 +5,9 @@
 }
 
 .agsjsTOCNode {
-    padding-top: 1px;
+    /*padding-top: 1px;
+    padding-bottom: 1px;*/
+    padding-top: 3px;
     padding-bottom: 1px;
 }
 
@@ -38,6 +40,12 @@
     font-size: 10pt;
 }
 
+.agsjsTOCGroupTitle {
+    padding-top: 3px;
+    font-size: 10pt;
+}
+
+
 .agsjsTOCServiceLayer {
     /*font-weight: bold;*/
 }
@@ -52,7 +60,7 @@
 }
 
 .agsjsTOCLegendLabel {
-    font-size: 8pt;
+    font-size: 10pt;
     padding-left: 2px;
 }
 

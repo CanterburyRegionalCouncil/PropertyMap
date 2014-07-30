@@ -102,6 +102,9 @@
     <Content Include="README.md" />
     <Content Include="resources\fontello-045f1512.zip" />
     <Content Include="packages.config" />
+    <None Include="Properties\PublishProfiles\ExtWebProd01 %28PROD%29.pubxml" />
+    <None Include="Properties\PublishProfiles\ExtWebTest01 %28TEST%29.pubxml" />
+    <None Include="Properties\PublishProfiles\LOCAL.pubxml" />
     <None Include="Properties\PublishProfiles\test1.ecan.govt.nz %28TEST%29.pubxml" />
     <Content Include="proxy.ashx" />
     <Content Include="proxy.config" />
@@ -198,7 +201,9 @@
     <Content Include="license.txt" />
     <Content Include="oauth-callback.html" />
     <Content Include="resources\configurationPanel.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Default.aspx.cs">

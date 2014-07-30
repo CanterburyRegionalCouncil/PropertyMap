@@ -1043,6 +1043,9 @@ function (
                 registry.byId("DetailsPanel").set("content", content);
             }
 
+            // Check if the feature is fully in the visible extent
+            this._checkFeatureExtents();
+
             // Update the records button state
             this._updateRecordButtonState();
 
@@ -1078,9 +1081,14 @@ function (
         },
         // Shows/hides the out of visible extent tooltip
         _toggleInExtentTooltip: function (showTooltip) {
+            // Get the zoom to record node
             var node = dom.byId("zoomToRecord")
             Tooltip.hide(node);
-            if (showTooltip) {
+
+            // Get whether the drawer (sidebar) is open
+            var currentlyOpen = domClass.contains(document.body, this._drawer.css.drawerOpen);
+
+            if (showTooltip && currentlyOpen) {
                 Tooltip.show("This feature extends beyond the visible extent of the map", node);
                 //hide after 2 seconds
                 setTimeout(lang.hitch(this, function () { Tooltip.hide(node); }), 2000);
