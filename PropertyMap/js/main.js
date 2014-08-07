@@ -20,6 +20,7 @@ define([
     "application/Logo",
     "application/TOCTree",
     "application/SuggestionSearch",
+    "application/HelpButton",
     "esri/dijit/HomeButton",
     "esri/dijit/LocateButton",
     "esri/dijit/BasemapToggle",
@@ -60,6 +61,7 @@ function (
     Logo,
     TOCTree,
     SuggestionSearch,
+    HelpButton,
     HomeButton, LocateButton, BasemapToggle,
     Geocoder,
     Popup,
@@ -590,6 +592,13 @@ function (
                     layerInfos: this.layerInfos
                 }, 'PrintDialog');
                 this._PrintDialog.startup();
+            }
+            // help link
+            if (this.config.helpLinkUrl) {
+                //var helpLink = new HelpButton({
+                //    "helpLinkUrl": this.config.helpLinkUrl
+                //}, 'HelpLink');
+                //helpLink.startup();
             }
             // i18n overview placement
             var overviewPlacement = 'left';

@@ -85,13 +85,16 @@
     <Content Include="images\progressBarFull.png" />
     <Content Include="images\settings.png" />
     <Content Include="js\dijit\templates\BasemapDialog.html" />
+    <Content Include="js\dijit\templates\HelpButton.html" />
     <Content Include="js\dijit\templates\Logo.html" />
     <Content Include="js\dijit\templates\PrintDialog.html" />
     <Content Include="js\dijit\templates\PrintResult.html" />
     <Content Include="js\dijit\templates\SuggestionSearch.html" />
     <Content Include="js\dijit\templates\tocNode.html" />
+    <Content Include="js\HelpButton.js" />
     <Content Include="js\Logo.js" />
     <Content Include="js\nls\BasemapDialog.js" />
+    <Content Include="js\nls\HelpButton.js" />
     <Content Include="js\nls\Logo.js" />
     <Content Include="js\nls\SuggestionSearch.js" />
     <Content Include="js\nls\PrintDialog.js" />

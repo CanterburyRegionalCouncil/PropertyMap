@@ -73,6 +73,7 @@
                     </div>
                     <div id="title" class="app-title"></div>
                     <div class="top-menu-right">
+                        <div id="HelpLink"></div>
                         <div id="ShareDialog"></div>
                         <div id="PrintDialog"></div>
                         <div id="BasemapDialog"></div>

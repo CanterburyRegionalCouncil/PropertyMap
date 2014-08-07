@@ -65,8 +65,14 @@ define([
             },
             _moreInfoLink: function(){
                 var node = dom.byId('more_info_link');
-                if(node && this.item && this.item.id){
-                    node.innerHTML = '<a target="_blank" href="' + this.config.sharinghost + "/home/item.html?id=" + this.item.id + '">' + this.config.i18n.general.moreInfo + '</a>';   
+                if (node && this.item && this.item.id) {
+
+                    if (this.config.moreinfopath != "") {
+                        node.innerHTML = '<a target="_blank" href="' + this.config.moreinfopath + this.item.id + '">' + this.config.i18n.general.moreInfo + '</a>';
+                    } else {
+                        //Default to portal page
+                        node.innerHTML = '<a target="_blank" href="' + this.config.sharinghost + "/home/item.html?id=" + this.item.id + '">' + this.config.i18n.general.moreInfo + '</a>';
+                    }
                 }
             },
             _setSummary: function (description) {
