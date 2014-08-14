@@ -452,7 +452,7 @@ define([
 
                     template.layoutOptions = {
                         authorText: form.author,
-                        copyrightText: form.copyright,
+                        //copyrightText: form.copyright,
                         legendLayers: (this.layoutForm.legend.length > 0 && this.layoutForm.legend[0]) ? legendLayers : [],
                         titleText: form.title
                         //scalebarUnit: this.layoutForm.scalebarUnit

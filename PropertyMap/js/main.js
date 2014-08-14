@@ -551,7 +551,7 @@ function (
                     map: this.map,
                     title: this.config.title,
                     summary: this.item.snippet,
-                    hashtags: 'esriPIM',
+                    hashtags: 'canterburymaps',
                     basemapSettings: this.config.baseMapSettings
                 }, 'BasemapDialog');
                 this._BasemapDialog.startup();
@@ -566,7 +566,7 @@ function (
                     image: this.config.sharinghost + '/sharing/rest/content/items/' + this.item.id + '/info/' + this.item.thumbnail,
                     title: this.config.title,
                     summary: this.item.snippet,
-                    hashtags: 'esriPIM'
+                    hashtags: 'canterburymaps'
                 }, 'ShareDialog');
                 this._ShareDialog.startup();
             }
