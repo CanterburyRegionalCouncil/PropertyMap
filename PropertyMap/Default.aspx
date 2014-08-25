@@ -28,7 +28,8 @@
     <!-- Fav Icon -->
     <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
     <!--Use protocol relative urls that way if the browser is viewing the page via HTTPS the js/css file will be requested using the HTTPS protocol-->
-    <link rel="stylesheet" type="text/css" href="//js.arcgis.com/3.10/js/esri/css/esri.css" />
+    <%--<link rel="stylesheet" type="text/css" href="//js.arcgis.com/3.10/js/esri/css/esri.css" />--%>
+    <link rel="stylesheet" type="text/css" href="http://canterburymaps.govt.nz/api/3.10/arcgis_js_api/library/3.10/3.10/js/esri/css/esri.css" />
     <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Lato:300,400,700" />
     <!--Load any application specific styles-->
     <link rel="stylesheet" type="text/css" href="css/dijit.css" />
@@ -53,60 +54,60 @@
 </head>
 <body class="calcite app-loading">
     <form id="form1" runat="server">
-          </form>
-        <!--The ArcGIS API for JavaScript provides bidirectional support.  When viewing the application in an right to left (rtl) language like Hebrew and Arabic the map needs to remain in left-to-right (ltr) mode. Specify this by setting the dir attribute on the div to ltr. -->
-        <div class="loading-indicator">
-            <div class="loading-error">
-                <div class="icon-emo-unhappy"></div>
-                <div class="error-message-text" id="error_message"></div>
-            </div>
+    </form>
+    <!--The ArcGIS API for JavaScript provides bidirectional support.  When viewing the application in an right to left (rtl) language like Hebrew and Arabic the map needs to remain in left-to-right (ltr) mode. Specify this by setting the dir attribute on the div to ltr. -->
+    <div class="loading-indicator">
+        <div class="loading-error">
+            <div class="icon-emo-unhappy"></div>
+            <div class="error-message-text" id="error_message"></div>
         </div>
-        <div id="bc_outer" class="border-container-outer">
-            <div id="cp_outer_left" class="content-pane-left">
-                <div id="drawer_menus"></div>
-            </div>
-            <div id="cp_outer_center" class="content-pane-center">
-                <div id="geoData"></div>
-                <div class="top-bar">
-                    <div id="hamburger_button" class="hamburger-button toggle-grey">
-                        <div class="icon-menu-1"></div>
+    </div>
+    <div id="bc_outer" class="border-container-outer">
+        <div id="cp_outer_left" class="content-pane-left">
+            <div id="drawer_menus"></div>
+        </div>
+        <div id="cp_outer_center" class="content-pane-center">
+            <div id="geoData"></div>
+            <div class="top-bar">
+                <div id="hamburger_button" class="hamburger-button toggle-grey">
+                    <div class="icon-menu-1"></div>
+                </div>
+                <div id="title" class="app-title"></div>
+                <div class="top-menu-right">
+                    <div id="HelpLink"></div>
+                    <div id="ShareDialog"></div>
+                    <div id="PrintDialog"></div>
+                    <div id="BasemapDialog"></div>
+                    <div class="locate-box">
+                        <div id="geocoderSearch"></div>
                     </div>
-                    <div id="title" class="app-title"></div>
-                    <div class="top-menu-right">
-                        <div id="HelpLink"></div>
-                        <div id="ShareDialog"></div>
-                        <div id="PrintDialog"></div>
-                        <div id="BasemapDialog"></div>
-                        <div class="locate-box">
-                            <div id="geocoderSearch"></div>
-                        </div>
-                        <div id="mobileGeocoderIcon" class="mobile-geocoder-icon icon-right">
-                            <div id="mobileGeocoderIconContainer" class="button-container toggle-grey icon-search-1"></div>
-                        </div>
-                        <div class="clear"></div>
+                    <div id="mobileGeocoderIcon" class="mobile-geocoder-icon icon-right">
+                        <div id="mobileGeocoderIconContainer" class="button-container toggle-grey icon-search-1"></div>
                     </div>
                     <div class="clear"></div>
                 </div>
-                <div id="mobileSearch" class="mobile-locate-box-hidden">
-                    <div class="mobile-search-container">
-                        <div id="geocoderMobile"></div>
-                        <div id="btnCloseGeocoder" class="close-geocoder-button">Cancel</div>
-                        <div class="clear"></div>
-                    </div>
-                </div>
-                <div id="mapButtons" class="map-buttons">
-                    <div id="LocateButton"></div>
-                    <div id="HomeButton"></div>
-                </div>
-                <div id="BasemapToggle"></div>
-                <div id="mapDiv" dir="ltr">
-                    <div id="swipeDiv"></div>
-                    <div id="LogoDiv"></div>
+                <div class="clear"></div>
+            </div>
+            <div id="mobileSearch" class="mobile-locate-box-hidden">
+                <div class="mobile-search-container">
+                    <div id="geocoderMobile"></div>
+                    <div id="btnCloseGeocoder" class="close-geocoder-button">Cancel</div>
+                    <div class="clear"></div>
                 </div>
             </div>
+            <div id="mapButtons" class="map-buttons">
+                <div id="LocateButton"></div>
+                <div id="HomeButton"></div>
+            </div>
+            <div id="BasemapToggle"></div>
+            <div id="mapDiv" dir="ltr">
+                <div id="swipeDiv"></div>
+                <div id="LogoDiv"></div>
+            </div>
         </div>
+    </div>
 
-  
+
 
     <script type="text/javascript">
         var package_path = window.location.pathname.substring(0, window.location.pathname.lastIndexOf('/'));
@@ -125,7 +126,8 @@
             }]
         };
     </script>
-    <script type="text/javascript" src="//js.arcgis.com/3.10/init.js"></script>
+    <%--<script type="text/javascript" src="//js.arcgis.com/3.10/init.js"></script>--%>
+    <script type="text/javascript" src="http://canterburymaps.govt.nz/api/3.10/arcgis_js_api/library/3.10/3.10/init.js"></script>
     <script type="text/javascript">
         require([
             "application/template",
