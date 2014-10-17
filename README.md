@@ -1,3 +1,4 @@
+[![Stories in Ready](https://badge.waffle.io/canterburyregionalcouncil/propertymap.png?label=ready&title=Ready)](https://waffle.io/canterburyregionalcouncil/propertymap)
 PropertyMap
 ===========
 
