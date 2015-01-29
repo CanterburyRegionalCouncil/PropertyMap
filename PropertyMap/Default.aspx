@@ -28,7 +28,7 @@
     <!-- Fav Icon -->
     <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
     <!--Use protocol relative urls that way if the browser is viewing the page via HTTPS the js/css file will be requested using the HTTPS protocol-->
-    <link rel="stylesheet" type="text/css" href="//js.arcgis.com/3.10/js/esri/css/esri.css" />
+    <link rel="stylesheet" type="text/css" href="http://canterburymaps.govt.nz/api/3.11/arcgis_js_api/library/3.11/3.11/esri/css/esri.css" />
     <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Lato:300,400,700" />
     <!--Load any application specific styles-->
     <link rel="stylesheet" type="text/css" href="css/dijit.css" />
@@ -124,7 +124,7 @@
             }]
         };
     </script>
-    <script type="text/javascript" src="//js.arcgis.com/3.10/init.js"></script>
+    <script type="text/javascript" src="http://canterburymaps.govt.nz/api/3.11/arcgis_js_api/library/3.11/3.11/init.js"></script>
     <script type="text/javascript">
         require([
             "application/template",
