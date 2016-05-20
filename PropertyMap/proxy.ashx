@@ -12,6 +12,7 @@ using System.Web;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+    using System.Net;
 using System.Xml.Serialization;
 using System.Web.Caching;
 
@@ -23,15 +24,15 @@ using Newtonsoft.Json.Linq;
 /// the proxy.config file to determine properties of the server.
 /// </summary>
 public class proxy : IHttpHandler {
-  
+
     public void ProcessRequest (HttpContext context) {
 
         HttpResponse response = context.Response;
 
-        context.Response.Clear(); 
+        context.Response.Clear();
         context.Response.Cache.SetCacheability(HttpCacheability.Public);
         context.Response.Cache.SetExpires(DateTime.MinValue);
-        
+
         // Get the URL requested by the client (take the entire querystring at once
         //  to handle the case of the URL itself containing querystring parameters)
         string uri = context.Request.Url.Query.Substring(1);
@@ -53,13 +54,13 @@ public class proxy : IHttpHandler {
             {
                 // Parse webmap into JSON object
                 JObject jObject = JObject.Parse(webmap);
-                
+
                 // Parse the operational layers
                 JToken operationalLayers = jObject["operationalLayers"];
 
                 // Set the current layer
                 JToken currentLayer = null;
-                
+
                 // Check for custom Parameters related to tiled map services to be injected if they are not already in the map definition
                 var tiledLayersText = context.Request.Form["tiledLayers"];
                 var visibleLayersText = context.Request.Form["visibleLayers"];
@@ -78,7 +79,7 @@ public class proxy : IHttpHandler {
                         var olayer = (from o in operationalLayers.Children()
                                       where (string)o["id"] == layerid
                                       select o).FirstOrDefault();
-                        
+
                         // Check if this value is a tiled map
                         var tlayer = (from t in tiledLayers.Children()
                                       where (string)t["id"] == layerid
@@ -102,7 +103,7 @@ public class proxy : IHttpHandler {
                         currentLayer = olayer;
                     }
                 }
-                
+
                 // Create list of remove layers
                 List<JToken> removeLayers = new List<JToken>();
 
@@ -113,7 +114,7 @@ public class proxy : IHttpHandler {
                     if (layer["title"] != null) {
                         layertitle  = layer["title"].ToString();
                     }
-                    
+
                     if (layertitle.StartsWith("hiddenLayer_"))
                     {
                         removeLayers.Add(layer);
@@ -122,21 +123,21 @@ public class proxy : IHttpHandler {
                     {
                         // Check if this is a feature layer and get the url if it is
                         var layerurl = layer["url"];
-                        if (layerurl != null) 
+                        if (layerurl != null)
                         {
                             // Check if map export request is for 96 DPI - no need to substitute if this is the case as this will match the tile cahce
-                            
-                            
+
+
                             // Check for layer substitution
                             SubstituteUrl substitute = getSubstituteFromConfig(layerurl.ToString());
                             if (substitute != null)
                             {
                                 // Replace url reference with alternate from substitute object
                                 layerurl.Replace(JToken.FromObject(substitute.Alternate));
-                                
+
                                 // TO DO:  Bring in token details from substitute object (if any)
                             }
-                            
+
                             // Check for visible layers
                             var visiblelayers = layer["visibleLayers"];
                             if (visiblelayers != null)
@@ -213,7 +214,7 @@ public class proxy : IHttpHandler {
                 {
                     webmapjson = Uri.EscapeDataString(jString);
                 }
-                
+
                 // Reconstruct the request as a string
                 var sb = new StringBuilder();
                 foreach (var param in context.Request.Form)
@@ -234,6 +235,7 @@ public class proxy : IHttpHandler {
                 req.Method = "POST";
                 req.ServicePoint.Expect100Continue = false;
                 req.Referer = context.Request.Headers["referer"];
+                req.Proxy = new WebProxy();
 
                 byte[] bytes = Encoding.UTF8.GetBytes(sb.ToString());
                 req.ContentLength = bytes.Length;
@@ -320,6 +322,7 @@ public class proxy : IHttpHandler {
             req.Method = context.Request.HttpMethod;
             req.ServicePoint.Expect100Continue = false;
             req.Referer = context.Request.Headers["referer"];
+                req.Proxy = new WebProxy();
 
             // Set body of request for POST requests
             if (context.Request.InputStream.Length > 0)
@@ -402,7 +405,7 @@ public class proxy : IHttpHandler {
             response.End();
         }
     }
- 
+
     public bool IsReusable {
         get {
             return false;
@@ -439,7 +442,7 @@ public class proxy : IHttpHandler {
 
         return null;
     }
-    
+
     // Gets the token for a server URL from a configuration file
     // TODO: ?modify so can generate a new short-lived token from username/password in the config file
     private string getTokenFromConfigFile(string uri)
@@ -464,11 +467,11 @@ public class proxy : IHttpHandler {
         {
             if (e is ApplicationException)
                 throw e;
-            
+
             // just return an empty string at this point
             // -- may want to throw an exception, or add to a log file
         }
-        
+
         return string.Empty;
     }
 
@@ -482,7 +485,7 @@ public class proxy : IHttpHandler {
             var queryDictionary = System.Web.HttpUtility.ParseQueryString(task.Query);
             webmap = queryDictionary["Web_Map_as_JSON"].ToString();
         }
-        return webmap; 
+        return webmap;
     }
 }
 
@@ -562,7 +565,7 @@ public class ProxyConfig
         get { return this.substituteUrls; }
         set { this.substituteUrls = value; }
     }
-    
+
     public string GetToken(string uri)
     {
         foreach (ServerUrl su in serverUrls)
@@ -583,7 +586,7 @@ public class ProxyConfig
 
         return string.Empty;
     }
-    
+
     public SubstituteUrl GetSubstitute(string uri)
     {
         foreach (SubstituteUrl su in substituteUrls)
@@ -596,9 +599,9 @@ public class ProxyConfig
 
         return null;
     }
-    
-    
-    
+
+
+
 }
 
 public class ServerUrl
@@ -634,7 +637,7 @@ public class SubstituteUrl
     string url;
     string alternate;
     string token;
-    
+
     [XmlAttribute("url")]
     public string Url
     {
